@@ -1,4 +1,6 @@
-﻿using System.Net.Http.Headers;
+﻿using FirstCSharp.DTO;
+using System.Net.Http.Headers;
+using System.Text.Json;
 
 namespace FirstCSharp
 {
@@ -23,11 +25,15 @@ namespace FirstCSharp
             httpClient.DefaultRequestHeaders.Add("X-REST-API-KEY", apiKey);
         }
 
-        public async Task<string> GetAllClientsJson()
+        public async Task<Client[]> GetAllClients()
         {
-            return await httpClient.GetStringAsync(
-                new PathUri(Model.client).ToString()
+            string apiResponseAsJson = await httpClient.GetStringAsync(
+                    new PathUri(Model.client).ToString()
                 );
+
+            DTO.ApiResponse? apiResponse = JsonSerializer.Deserialize<ApiResponse>(apiResponseAsJson);
+
+            return apiResponse.data.client;
         }
 
         public enum Model

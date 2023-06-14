@@ -37,10 +37,9 @@
             // 
             // loginButton
             // 
-            loginButton.Location = new Point(337, 195);
-            loginButton.Margin = new Padding(3, 2, 3, 2);
+            loginButton.Location = new Point(385, 260);
             loginButton.Name = "loginButton";
-            loginButton.Size = new Size(84, 22);
+            loginButton.Size = new Size(96, 29);
             loginButton.TabIndex = 0;
             loginButton.Text = "Login";
             loginButton.UseVisualStyleBackColor = true;
@@ -48,49 +47,46 @@
             // 
             // textBoxDomainName
             // 
-            textBoxDomainName.Location = new Point(200, 98);
-            textBoxDomainName.Margin = new Padding(3, 2, 3, 2);
+            textBoxDomainName.Location = new Point(229, 131);
             textBoxDomainName.Name = "textBoxDomainName";
-            textBoxDomainName.Size = new Size(221, 23);
+            textBoxDomainName.Size = new Size(252, 27);
             textBoxDomainName.TabIndex = 1;
             // 
             // labelDomainName
             // 
             labelDomainName.AutoSize = true;
-            labelDomainName.Location = new Point(200, 72);
+            labelDomainName.Location = new Point(229, 96);
             labelDomainName.Name = "labelDomainName";
-            labelDomainName.Size = new Size(84, 15);
+            labelDomainName.Size = new Size(106, 20);
             labelDomainName.TabIndex = 2;
             labelDomainName.Text = "Domain Name";
             // 
             // labelApiKey
             // 
             labelApiKey.AutoSize = true;
-            labelApiKey.Location = new Point(200, 130);
+            labelApiKey.Location = new Point(229, 173);
             labelApiKey.Name = "labelApiKey";
-            labelApiKey.Size = new Size(47, 15);
+            labelApiKey.Size = new Size(59, 20);
             labelApiKey.TabIndex = 4;
             labelApiKey.Text = "API Key";
             // 
             // textBoxApiKey
             // 
-            textBoxApiKey.Location = new Point(200, 155);
-            textBoxApiKey.Margin = new Padding(3, 2, 3, 2);
+            textBoxApiKey.Location = new Point(229, 207);
             textBoxApiKey.Name = "textBoxApiKey";
-            textBoxApiKey.Size = new Size(221, 23);
+            textBoxApiKey.Size = new Size(252, 27);
             textBoxApiKey.TabIndex = 3;
             // 
             // LoginForm
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(654, 315);
+            ClientSize = new Size(747, 420);
             Controls.Add(labelApiKey);
             Controls.Add(textBoxApiKey);
             Controls.Add(labelDomainName);
             Controls.Add(textBoxDomainName);
             Controls.Add(loginButton);
-            Margin = new Padding(3, 2, 3, 2);
             Name = "LoginForm";
             Text = "Form1";
             ResumeLayout(false);
