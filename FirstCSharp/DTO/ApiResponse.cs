@@ -7,10 +7,10 @@ using static FirstCSharp.DTO.Client;
 
 namespace FirstCSharp.DTO
 {
-    public class ApiResponse
+    public class ApiResponse<T> where T : AbstractData
     {
         public bool success { get; set; }
         public string message { get; set; }
-        public Data<Client> data { get; set; }
+        public T data { get; set; }
     }
 }

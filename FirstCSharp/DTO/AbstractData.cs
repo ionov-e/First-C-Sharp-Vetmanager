@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace FirstCSharp.DTO
 {
-    public class Data<T>
+    public class AbstractData
     {
         public string totalCount { get; set; }
-        public T[] client { get; set; }
     }
 }

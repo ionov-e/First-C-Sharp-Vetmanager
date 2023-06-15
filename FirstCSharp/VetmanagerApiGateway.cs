@@ -31,7 +31,7 @@ namespace FirstCSharp
                     new PathUri(Model.client).ToString()
                 );
 
-            DTO.ApiResponse? apiResponse = JsonSerializer.Deserialize<ApiResponse>(apiResponseAsJson);
+            DTO.ApiResponse<ClientData>? apiResponse = JsonSerializer.Deserialize<ApiResponse<ClientData>>(apiResponseAsJson);
 
             return apiResponse.data.client;
         }
