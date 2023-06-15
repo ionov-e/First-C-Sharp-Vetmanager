@@ -31,9 +31,8 @@ namespace FirstCSharp
                     new PathUri(Model.client).ToString()
                 );
 
-            DTO.ApiResponse<ClientData>? apiResponse = JsonSerializer.Deserialize<ApiResponse<ClientData>>(apiResponseAsJson);
-
-            return apiResponse.data.client;
+            var apiResponse = JsonSerializer.Deserialize<ApiResponse<ClientListData>>(apiResponseAsJson);
+            return apiResponse?.Data.Clients ?? Array.Empty<Client>();
         }
 
         public enum Model

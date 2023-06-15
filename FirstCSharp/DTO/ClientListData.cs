@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 
 namespace FirstCSharp.DTO
 {
-    public class ClientData: AbstractModelData
+    public class ClientListData: AbstractModelData
     {
         [JsonPropertyName("client")]
-        public required Client Client { get; set; }
+        public required Client[] Clients { get; set; }
     }
 }

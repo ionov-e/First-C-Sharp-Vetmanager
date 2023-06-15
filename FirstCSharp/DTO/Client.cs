@@ -9,38 +9,71 @@ namespace FirstCSharp.DTO
 {
     public class Client
     {
-        public string id { get; set; }
-        public string address { get; set; }
-        public string home_phone { get; set; }
-        public string work_phone { get; set; }
-        public string note { get; set; }
-        public string type_id { get; set; }
-        public string how_find { get; set; }
-        public string balance { get; set; }
-        public string email { get; set; }
-        public string city { get; set; }
-        public string city_id { get; set; }
-        public string date_register { get; set; }
-        public string cell_phone { get; set; }
-        public string zip { get; set; }
-        public object registration_index { get; set; }
-        public string vip { get; set; }
-        public string last_name { get; set; }
-        public string first_name { get; set; }
-        public string middle_name { get; set; }
-        public string status { get; set; }
-        public string discount { get; set; }
-        public string passport_series { get; set; }
-        public string lab_number { get; set; }
-        public string street_id { get; set; }
-        public string apartment { get; set; }
-        public string unsubscribe { get; set; }
-        public string in_blacklist { get; set; }
-        public string last_visit_date { get; set; }
-        public string number_of_journal { get; set; }
-        public string phone_prefix { get; set; }
-        public City city_data { get; set; }
-        public ClientType client_type_data { get; set; }
-        public Street street_data { get; set; }
+        [JsonPropertyName("id")]
+        public required string Id { get; set; }
+        [JsonPropertyName("address")]
+        public required string Address { get; set; }                                               
+        [JsonPropertyName("home_phone")]
+        public required string HomePhone { get; set; }                                            
+        [JsonPropertyName("work_phone")]
+        public required string WorkPhone { get; set; }                                            
+        [JsonPropertyName("note")]
+        public required string Note { get; set; }                                                  
+        [JsonPropertyName("type_id")]
+        public string? TypeId { get; set; }                                               
+        [JsonPropertyName("how_find")]
+        public string? HowFind { get; set; }                                              
+        [JsonPropertyName("balance")]
+        public required string Balance { get; set; }                                               
+        [JsonPropertyName("email")]
+        public required string Email { get; set; }                                                 
+        [JsonPropertyName("city")]
+        public required string CityName { get; set; }                                                  
+        [JsonPropertyName("city_id")]
+        public string? CityId { get; set; }                                               
+        [JsonPropertyName("date_register")]
+        public string? DateRegister { get; set; }                                         
+        [JsonPropertyName("cell_phone")]
+        public required string CellPhone { get; set; }                                            
+        [JsonPropertyName("zip")]
+        public required string Zip { get; set; }                                                   
+        [JsonPropertyName("registration_index")]
+        public required string RegistrationIndex { get; set; }                                    
+        [JsonPropertyName("vip")]
+        public required string Vip { get; set; }                                                   
+        [JsonPropertyName("last_name")]
+        public required string LastName { get; set; }                                             
+        [JsonPropertyName("first_name")]
+        public required string FirstName { get; set; }                                            
+        [JsonPropertyName("middle_name")]
+        public required string MiddleName { get; set; }                                           
+        [JsonPropertyName("status")]
+        public required string Status { get; set; }                                                
+        [JsonPropertyName("discount")]
+        public required string Discount { get; set; }                                              
+        [JsonPropertyName("passport_series")]
+        public required string PassportSeries { get; set; }                                       
+        [JsonPropertyName("lab_number")]
+        public required string LabNumber { get; set; }                                            
+        [JsonPropertyName("street_id")]
+        public string? StreetId { get; set; }                                             
+        [JsonPropertyName("apartment")]
+        public required string Appartment { get; set; }                                             
+        [JsonPropertyName("unsubscribe")]
+        public required string IsUnsubscribed { get; set; }                                           
+        [JsonPropertyName("in_blacklist")]
+        public required string IsInBlacklist { get; set; }                                          
+        [JsonPropertyName("last_visit_date")]
+        public string? LastVisitDate { get; set; }                                       
+        [JsonPropertyName("number_of_journal")]
+        public required string NumberOfJournal { get; set; }                                     
+        [JsonPropertyName("phone_prefix")]
+        public required string PhonePrefix { get; set; }
+        [JsonPropertyName("city_data")]
+        public City? City { get; set; }
+        [JsonPropertyName("client_type_data")]
+        public ClientType? ClientTypeData { get; set; }
+        [JsonPropertyName("street_data")]
+        public Street? Street { get; set; }
     }
 }
