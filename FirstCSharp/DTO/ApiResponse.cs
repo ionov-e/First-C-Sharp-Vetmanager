@@ -8,7 +8,8 @@ using static FirstCSharp.DTO.Client;
 
 namespace FirstCSharp.DTO
 {
-    public class ApiResponse<T> where T : AbstractModelData
+    public class ApiResponse<T> where T : AbstractModelDataWithStringTotalCount
+        //where T2 : AbstractModelDataWithStringTotalCount
     {
         [JsonPropertyName("success")]
         public required bool IsSuccess { get; set; }

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace FirstCSharp.DTO
 {
-    public class ClientData: AbstractModelData
+    public class ClientData: AbstractModelDataWithStringTotalCount
     {
         [JsonPropertyName("client")]
         public required Client Client { get; set; }
