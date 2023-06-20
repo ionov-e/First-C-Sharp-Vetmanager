@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace FirstCSharp.DTO
 {
-    public class Client
+    public class Client : DtoInterface
     {
         [JsonPropertyName("id")]
         public required string Id { get; set; }

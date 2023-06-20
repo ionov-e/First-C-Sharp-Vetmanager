@@ -38,7 +38,7 @@ namespace FirstCSharp
             return apiResponse.Clients ?? Array.Empty<Client>();
         }
 
-        public async Task<TModelData> GetModelsDataFromApi<TModelData>(PathUri pathUri) where TModelData: AbstractModelDataWithStringTotalCount
+        public async Task<TModelData> GetModelsDataFromApi<TModelData>(PathUri pathUri) where TModelData: ModelDataInterface
         {
             string apiResponseAsJson = await httpClient.GetStringAsync(
                     pathUri.ToString()

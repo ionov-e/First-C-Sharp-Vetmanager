@@ -21,6 +21,7 @@ namespace FirstCSharp
 
             Client[] response = await vetmanagerGateway.GetAllClients();
             string responseAsString = response[0]?.City?.Title ?? "Failed";
+            //string responseAsString = response[0]?.City?.Title ?? "Failed";
 
             //Client response = await vetmanagerGateway.GetClient(1);
             //string responseAsString = response.City?.Title ?? "Failed";
