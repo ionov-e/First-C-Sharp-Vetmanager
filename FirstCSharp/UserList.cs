@@ -23,9 +23,5 @@ namespace FirstCSharp
             comboBoxUserList.DisplayMember = "FullName";
             comboBoxUserList.ValueMember = "Id";
         }
-
-        private void comboBoxUserList_Load(object sender, EventArgs e)
-        {
-        }
     }
 }

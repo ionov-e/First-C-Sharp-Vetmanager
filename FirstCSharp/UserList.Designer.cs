@@ -46,7 +46,6 @@
             // 
             // comboBoxUserList
             // 
-            comboBoxUserList.DataSource = clientListDataBindingSource;
             comboBoxUserList.DropDownStyle = ComboBoxStyle.DropDownList;
             comboBoxUserList.FormattingEnabled = true;
             comboBoxUserList.Location = new Point(119, 41);
