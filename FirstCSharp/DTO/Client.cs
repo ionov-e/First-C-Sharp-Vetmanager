@@ -75,5 +75,12 @@ namespace FirstCSharp.DTO
         public ClientType? ClientTypeData { get; set; }
         [JsonPropertyName("street_data")]
         public Street? Street { get; set; }
+        public string FullName
+        {
+            get
+            {
+                return $"{LastName} {FirstName} {MiddleName}";
+            }
+        }
     }
 }

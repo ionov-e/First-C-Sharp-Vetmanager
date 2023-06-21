@@ -51,7 +51,7 @@
             comboBoxUserList.FormattingEnabled = true;
             comboBoxUserList.Location = new Point(119, 41);
             comboBoxUserList.Name = "comboBoxUserList";
-            comboBoxUserList.Size = new Size(121, 23);
+            comboBoxUserList.Size = new Size(182, 23);
             comboBoxUserList.TabIndex = 1;
             // 
             // clientListDataBindingSource

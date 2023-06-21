@@ -13,17 +13,19 @@ namespace FirstCSharp
 {
     public partial class UserList : Form
     {
-        private readonly ClientListData _clientListData;
+        private readonly Client[] _clients;
 
-        public UserList()
+        public UserList(Client[] clients)
         {
             InitializeComponent();
+            _clients = clients;
+            comboBoxUserList.DataSource = _clients;
+            comboBoxUserList.DisplayMember = "FullName";
+            comboBoxUserList.ValueMember = "Id";
         }
 
         private void comboBoxUserList_Load(object sender, EventArgs e)
         {
-            comboBoxUserList.DataSource = _clientListData.Clients;
-            comboBoxUserList.DisplayMember = "LastName";
         }
     }
 }
