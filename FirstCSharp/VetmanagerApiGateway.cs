@@ -1,6 +1,7 @@
 ﻿using FirstCSharp.DTO;
 using System.Net.Http.Headers;
 using System.Text.Json;
+using static FirstCSharp.VetmanagerApiGateway;
 
 namespace FirstCSharp
 {
@@ -25,14 +26,25 @@ namespace FirstCSharp
             httpClient.DefaultRequestHeaders.Add("X-REST-API-KEY", apiKey);
         }
 
+        public async Task<Client> GetClient(int id)
+        {
+            var apiResponse = await GetModelsDataFromApi<ClientData>(new PathUri(Model.client, id));
+            return apiResponse.Client;
+        }
+
         public async Task<Client[]> GetAllClients()
         {
-            string apiResponseAsJson = await httpClient.GetStringAsync(
-                    new PathUri(Model.client).ToString()
-                );
+            var apiResponse = await GetModelsDataFromApi<ClientListData>(new PathUri(Model.client));
+            return apiResponse.Clients ?? Array.Empty<Client>();
+        }
 
-            var apiResponse = JsonSerializer.Deserialize<ApiResponse<ClientListData>>(apiResponseAsJson);
-            return apiResponse?.Data.Clients ?? Array.Empty<Client>();
+        public async Task<TModelData> GetModelsDataFromApi<TModelData>(PathUri pathUri) where TModelData: ModelDataInterface
+        {
+            string apiResponseAsJson = await httpClient.GetStringAsync(
+                    pathUri.ToString()
+                );
+            var apiResponse = JsonSerializer.Deserialize<ApiResponse<TModelData>>(apiResponseAsJson) ?? throw new Exception("Wrong API response");
+            return apiResponse.Data;
         }
 
         public enum Model
