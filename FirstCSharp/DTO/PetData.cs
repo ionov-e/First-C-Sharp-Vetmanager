@@ -9,14 +9,8 @@ using System.Threading.Tasks;
 
 namespace FirstCSharp.DTO
 {
-    public class PetData : ModelDataInterface
+    public class PetData : AbstractDataWithTotalCountAsInt
     {
-        public required int totalCount { get; set; }
-        public int TotalNumber
-        {
-            get { return totalCount; }
-            set { totalCount = value; }
-        }
         [JsonPropertyName("pet")]
         public required Pet Pet { get; set; }
     }

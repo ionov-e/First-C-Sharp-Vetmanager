@@ -9,14 +9,8 @@ using System.Threading.Tasks;
 
 namespace FirstCSharp.DTO
 {
-    public class ClientData : ModelDataInterface
+    public class ClientData : AbstractDataWithTotalCountAsInt
     {
-        public required int totalCount { get; set; }
-        public int TotalNumber
-        {
-            get { return totalCount; }
-            set { totalCount = value; }
-        }
         [JsonPropertyName("client")]
         public required Client Client { get; set; }
     }

@@ -10,14 +10,8 @@ using System.Xml.Linq;
 
 namespace FirstCSharp.DTO
 {
-    public class ClientListData : ModelDataInterface
+    public class ClientListData : AbstractDataWithTotalCountAsString
     {
-        public required string totalCount { get; set; }
-        public int TotalNumber
-        {
-            get { return Int32.Parse(totalCount); }
-            set { totalCount = value.ToString(); }
-        }
         [JsonPropertyName("client")]
         public required Client[] Clients { get; set; }
     }
