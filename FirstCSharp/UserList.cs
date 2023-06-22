@@ -8,20 +8,29 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static FirstCSharp.VetmanagerApiGateway;
 
 namespace FirstCSharp
 {
     public partial class UserList : Form
     {
+        private readonly VetmanagerApiGateway _vetmanagerApiGateway;
         private readonly Client[] _clients;
 
-        public UserList(Client[] clients)
+        public UserList(VetmanagerApiGateway vetmanagerApiGateway, Client[] clients)
         {
             InitializeComponent();
+            _vetmanagerApiGateway = vetmanagerApiGateway;
             _clients = clients;
             comboBoxUserList.DataSource = _clients;
             comboBoxUserList.DisplayMember = "FullName";
             comboBoxUserList.ValueMember = "Id";
+        }
+
+        private async void comboBoxUserList_SelectionChangeCommitted(object sender, EventArgs e)
+        {
+            string selectedOwnerId = comboBoxUserList.GetItemText(comboBoxUserList.SelectedValue) ?? throw new Exception("WTF? selectedOwnerId somehow is null");
+            Pet[] pets = await _vetmanagerApiGateway.GetPetByClientId(Int32.Parse(selectedOwnerId));
         }
     }
 }

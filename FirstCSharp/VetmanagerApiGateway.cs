@@ -5,6 +5,7 @@ using System.Net.Http.Headers;
 using System.Text.Json;
 using System.Xml.Linq;
 using static FirstCSharp.VetmanagerApiGateway;
+using static FirstCSharp.VetmanagerApiGateway.PathUri;
 
 namespace FirstCSharp
 {
@@ -41,10 +42,17 @@ namespace FirstCSharp
             return apiResponse.Clients ?? Array.Empty<Client>();
         }
 
+        public async Task<Pet[]> GetPetByClientId(int id)
+        {
+            var apiResponse = await GetModelsDataFromApi<PetListData>(new PathUri(Model.pet, new[] { new Filter("owner_id", id.ToString()) }));
+            return apiResponse.Pets;
+        }
+
         public async Task<TModelData> GetModelsDataFromApi<TModelData>(PathUri pathUri) where TModelData: ModelDataInterface
         {
+            string uri = pathUri.ToString();
             string apiResponseAsJson = await httpClient.GetStringAsync(
-                    pathUri.ToString()
+                    uri
                 );
             var apiResponse = JsonSerializer.Deserialize<ApiResponse<TModelData>>(apiResponseAsJson) ?? throw new Exception("Wrong API response");
             return apiResponse.Data;
@@ -84,7 +92,7 @@ namespace FirstCSharp
 
             public override string ToString() { return s_prefix + model.ToString() + GetIdIfPresent() + GetFiltersIfPresent(); }
 
-            private string GetIdIfPresent() { return (id == 0) ? "" : $"/{id}"; }
+            private string GetIdIfPresent() { return (id == null) ? "" : $"/{id}"; }
 
             private string GetFiltersIfPresent() {
                 
@@ -92,19 +100,19 @@ namespace FirstCSharp
                     return "";
                 }
 
-                string result = string.Empty;
+                string filtersAsString = string.Empty;
 
                 foreach (var filter in filters)
                 {
-                    result += filter.ToString();
+                    filtersAsString += filter.ToString();
 
                     if (!filter.Equals(filters.Last()))
                     {
-                        result += ',';
+                        filtersAsString += ',';
                     }
                 }
 
-                return $"?filter=[{result}]";
+                return $"?filter=[{filtersAsString}]";
             }
 
             public class Filter

@@ -52,6 +52,7 @@
             comboBoxUserList.Name = "comboBoxUserList";
             comboBoxUserList.Size = new Size(182, 23);
             comboBoxUserList.TabIndex = 1;
+            comboBoxUserList.SelectionChangeCommitted += comboBoxUserList_SelectionChangeCommitted;
             // 
             // clientListDataBindingSource
             // 
