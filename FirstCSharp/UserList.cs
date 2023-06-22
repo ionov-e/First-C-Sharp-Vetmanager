@@ -31,6 +31,7 @@ namespace FirstCSharp
         {
             string selectedOwnerId = comboBoxUserList.GetItemText(comboBoxUserList.SelectedValue) ?? throw new Exception("WTF? selectedOwnerId somehow is null");
             Pet[] pets = await _vetmanagerApiGateway.GetPetByClientId(Int32.Parse(selectedOwnerId));
+            this.petDataGridView.DataSource = pets;
         }
     }
 }
