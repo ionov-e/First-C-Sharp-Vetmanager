@@ -1,11 +1,14 @@
 ﻿using FirstCSharp.DTO;
+using Newtonsoft.Json.Linq;
+using System.Collections.Generic;
 using System.Net.Http.Headers;
 using System.Text.Json;
+using System.Xml.Linq;
 using static FirstCSharp.VetmanagerApiGateway;
 
 namespace FirstCSharp
 {
-    internal class VetmanagerApiGateway
+    public class VetmanagerApiGateway
     {
         private readonly HttpClient httpClient;
         private readonly string domainName;
@@ -57,22 +60,85 @@ namespace FirstCSharp
         {
             private const string s_prefix = "/rest/api/";
             private readonly Model model;
-            private readonly int id;
+            private readonly int? id;
+            private readonly Filter[] filters;
 
             public PathUri(Model model)
             {
                 this.model = model;
+                this.filters = Array.Empty<Filter>();
             }
 
             public PathUri(Model model, int id)
             {
                 this.model = model;
                 this.id = id;
+                this.filters = Array.Empty<Filter>();
             }
 
-            public override string ToString() { return s_prefix + model.ToString() + GetEndingWithIdIfPresent(); }
+            public PathUri(Model model, Filter[] filters)
+            {
+                this.model = model;
+                this.filters = filters;
+            }
 
-            private string GetEndingWithIdIfPresent() { return (id == 0) ? "" : $"/{id}"; }
+            public override string ToString() { return s_prefix + model.ToString() + GetIdIfPresent() + GetFiltersIfPresent(); }
+
+            private string GetIdIfPresent() { return (id == 0) ? "" : $"/{id}"; }
+
+            private string GetFiltersIfPresent() {
+                
+                if (!filters.Any()) {
+                    return "";
+                }
+
+                string result = string.Empty;
+
+                foreach (var filter in filters)
+                {
+                    result += filter.ToString();
+
+                    if (!filter.Equals(filters.Last()))
+                    {
+                        result += ',';
+                    }
+                }
+
+                return $"?filter=[{result}]";
+            }
+
+            public class Filter
+            {
+                private readonly string _property;
+                private readonly string _value;
+                private readonly string? _operator;
+
+                public Filter(string property, string value)
+                {
+                    _property = property;
+                    _value = value;
+                }
+
+                public Filter(string property, string value, string @operator)
+                {
+                    _property = property;
+                    _value = value;
+                    _operator = @operator;
+                }
+
+                public override string ToString()
+                {
+                    return "{'property':'" + _property + "', 'value':'" + _value + "'" + GetOperatorAsString() + "}";
+                }
+
+                private string GetOperatorAsString()
+                {
+                    return (_operator == null)
+                        ? ""
+                        : ", 'operator':'" + _operator + "'";
+                }
+            }
+            
         }
     }
 }
