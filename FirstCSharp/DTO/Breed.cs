@@ -11,5 +11,9 @@ namespace FirstCSharp.DTO
         public required string id { get; set; }
         public required string title { get; set; }
         public required string pet_type_id { get; set; }
+        public override string ToString()
+        {
+            return title;
+        }
     }
 }

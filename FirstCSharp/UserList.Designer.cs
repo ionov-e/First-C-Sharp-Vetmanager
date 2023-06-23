@@ -33,16 +33,14 @@
             comboBoxUserList = new ComboBox();
             clientListDataBindingSource = new BindingSource(components);
             petDataGridView = new DataGridView();
-            petBindingSource = new BindingSource(components);
-            clientListDataBindingSource1 = new BindingSource(components);
             idDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
             aliasDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
-            typeidDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
-            type = new DataGridViewTextBoxColumn();
+            breedidDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            typeDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
             sexDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
             birthdayDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
-            breedidDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
-            breedDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            petBindingSource = new BindingSource(components);
+            clientListDataBindingSource1 = new BindingSource(components);
             ((System.ComponentModel.ISupportInitialize)clientListDataBindingSource).BeginInit();
             ((System.ComponentModel.ISupportInitialize)petDataGridView).BeginInit();
             ((System.ComponentModel.ISupportInitialize)petBindingSource).BeginInit();
@@ -52,7 +50,7 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(46, 44);
+            label1.Location = new Point(47, 39);
             label1.Name = "label1";
             label1.Size = new Size(44, 15);
             label1.TabIndex = 0;
@@ -62,7 +60,8 @@
             // 
             comboBoxUserList.DropDownStyle = ComboBoxStyle.DropDownList;
             comboBoxUserList.FormattingEnabled = true;
-            comboBoxUserList.Location = new Point(119, 41);
+            comboBoxUserList.Location = new Point(119, 36);
+            comboBoxUserList.MaxDropDownItems = 10;
             comboBoxUserList.Name = "comboBoxUserList";
             comboBoxUserList.Size = new Size(182, 23);
             comboBoxUserList.TabIndex = 1;
@@ -76,45 +75,40 @@
             // 
             petDataGridView.AutoGenerateColumns = false;
             petDataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            petDataGridView.Columns.AddRange(new DataGridViewColumn[] { idDataGridViewTextBoxColumn, aliasDataGridViewTextBoxColumn, typeidDataGridViewTextBoxColumn, type, sexDataGridViewTextBoxColumn, birthdayDataGridViewTextBoxColumn, breedidDataGridViewTextBoxColumn, breedDataGridViewTextBoxColumn });
+            petDataGridView.Columns.AddRange(new DataGridViewColumn[] { idDataGridViewTextBoxColumn, aliasDataGridViewTextBoxColumn, breedidDataGridViewTextBoxColumn, typeDataGridViewTextBoxColumn, sexDataGridViewTextBoxColumn, birthdayDataGridViewTextBoxColumn });
             petDataGridView.DataSource = petBindingSource;
-            petDataGridView.Location = new Point(47, 93);
+            petDataGridView.Location = new Point(26, 98);
             petDataGridView.Name = "petDataGridView";
             petDataGridView.RowTemplate.Height = 25;
-            petDataGridView.Size = new Size(720, 309);
+            petDataGridView.Size = new Size(644, 307);
             petDataGridView.TabIndex = 2;
-            // 
-            // petBindingSource
-            // 
-            petBindingSource.DataSource = typeof(DTO.Pet);
-            // 
-            // clientListDataBindingSource1
-            // 
-            clientListDataBindingSource1.DataSource = typeof(DTO.ClientListData);
             // 
             // idDataGridViewTextBoxColumn
             // 
             idDataGridViewTextBoxColumn.DataPropertyName = "id";
             idDataGridViewTextBoxColumn.HeaderText = "Id";
+            idDataGridViewTextBoxColumn.MinimumWidth = 4;
             idDataGridViewTextBoxColumn.Name = "idDataGridViewTextBoxColumn";
+            idDataGridViewTextBoxColumn.Width = 50;
             // 
             // aliasDataGridViewTextBoxColumn
             // 
             aliasDataGridViewTextBoxColumn.DataPropertyName = "alias";
             aliasDataGridViewTextBoxColumn.HeaderText = "Alias";
             aliasDataGridViewTextBoxColumn.Name = "aliasDataGridViewTextBoxColumn";
+            aliasDataGridViewTextBoxColumn.Width = 150;
             // 
-            // typeidDataGridViewTextBoxColumn
+            // breedidDataGridViewTextBoxColumn
             // 
-            typeidDataGridViewTextBoxColumn.DataPropertyName = "type_id";
-            typeidDataGridViewTextBoxColumn.HeaderText = "Type ID";
-            typeidDataGridViewTextBoxColumn.Name = "typeidDataGridViewTextBoxColumn";
+            breedidDataGridViewTextBoxColumn.DataPropertyName = "breed";
+            breedidDataGridViewTextBoxColumn.HeaderText = "Breed";
+            breedidDataGridViewTextBoxColumn.Name = "breedidDataGridViewTextBoxColumn";
             // 
-            // type
+            // typeDataGridViewTextBoxColumn
             // 
-            type.DataPropertyName = "type";
-            type.HeaderText = "Type";
-            type.Name = "type";
+            typeDataGridViewTextBoxColumn.DataPropertyName = "type";
+            typeDataGridViewTextBoxColumn.HeaderText = "Type";
+            typeDataGridViewTextBoxColumn.Name = "typeDataGridViewTextBoxColumn";
             // 
             // sexDataGridViewTextBoxColumn
             // 
@@ -128,28 +122,24 @@
             birthdayDataGridViewTextBoxColumn.HeaderText = "Birthday";
             birthdayDataGridViewTextBoxColumn.Name = "birthdayDataGridViewTextBoxColumn";
             // 
-            // breedidDataGridViewTextBoxColumn
+            // petBindingSource
             // 
-            breedidDataGridViewTextBoxColumn.DataPropertyName = "breed_id";
-            breedidDataGridViewTextBoxColumn.HeaderText = "Breed Id";
-            breedidDataGridViewTextBoxColumn.Name = "breedidDataGridViewTextBoxColumn";
+            petBindingSource.DataSource = typeof(DTO.Pet);
             // 
-            // breedDataGridViewTextBoxColumn
+            // clientListDataBindingSource1
             // 
-            breedDataGridViewTextBoxColumn.DataPropertyName = "breed";
-            breedDataGridViewTextBoxColumn.HeaderText = "Breed";
-            breedDataGridViewTextBoxColumn.Name = "breedDataGridViewTextBoxColumn";
+            clientListDataBindingSource1.DataSource = typeof(DTO.ClientListData);
             // 
             // UserList
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
+            ClientSize = new Size(691, 428);
             Controls.Add(petDataGridView);
             Controls.Add(comboBoxUserList);
             Controls.Add(label1);
             Name = "UserList";
-            Text = "Form1";
+            Text = "Pet List";
             ((System.ComponentModel.ISupportInitialize)clientListDataBindingSource).EndInit();
             ((System.ComponentModel.ISupportInitialize)petDataGridView).EndInit();
             ((System.ComponentModel.ISupportInitialize)petBindingSource).EndInit();
@@ -166,13 +156,12 @@
         private DataGridView petDataGridView;
         private BindingSource petBindingSource;
         private BindingSource clientListDataBindingSource1;
+        private DataGridViewTextBoxColumn breedDataGridViewTextBoxColumn;
         private DataGridViewTextBoxColumn idDataGridViewTextBoxColumn;
         private DataGridViewTextBoxColumn aliasDataGridViewTextBoxColumn;
-        private DataGridViewTextBoxColumn typeidDataGridViewTextBoxColumn;
-        private DataGridViewTextBoxColumn type;
+        private DataGridViewTextBoxColumn breedidDataGridViewTextBoxColumn;
+        private DataGridViewTextBoxColumn typeDataGridViewTextBoxColumn;
         private DataGridViewTextBoxColumn sexDataGridViewTextBoxColumn;
         private DataGridViewTextBoxColumn birthdayDataGridViewTextBoxColumn;
-        private DataGridViewTextBoxColumn breedidDataGridViewTextBoxColumn;
-        private DataGridViewTextBoxColumn breedDataGridViewTextBoxColumn;
     }
 }

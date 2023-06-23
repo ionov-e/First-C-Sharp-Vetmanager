@@ -12,5 +12,10 @@ namespace FirstCSharp.DTO
         public required string title { get; set; }
         public required string picture { get; set; }
         public string? type { get; set; }
+
+        public override string ToString()
+        {
+            return title;
+        }
     }
 }

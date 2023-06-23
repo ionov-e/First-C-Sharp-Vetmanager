@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using static FirstCSharp.VetmanagerApiGateway;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace FirstCSharp
 {
@@ -25,6 +26,7 @@ namespace FirstCSharp
             comboBoxUserList.DataSource = _clients;
             comboBoxUserList.DisplayMember = "FullName";
             comboBoxUserList.ValueMember = "Id";
+            comboBoxUserList.SelectedItem = null;
         }
 
         private async void comboBoxUserList_SelectionChangeCommitted(object sender, EventArgs e)
