@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace FirstCSharp.WindowsForm
 {
-    public partial class Form1 : Form
+    public partial class PetCreation : Form
     {
-        public Form1()
+        public PetCreation()
         {
             InitializeComponent();
         }
