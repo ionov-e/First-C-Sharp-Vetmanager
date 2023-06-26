@@ -1,4 +1,4 @@
-﻿namespace FirstCSharp
+﻿namespace FirstCSharp.WindowsForm
 {
     partial class UserList
     {
@@ -185,6 +185,7 @@
             createButton.TabIndex = 6;
             createButton.Text = "Create New Pet";
             createButton.UseVisualStyleBackColor = true;
+            createButton.Click += createButton_Click;
             // 
             // editButton
             // 

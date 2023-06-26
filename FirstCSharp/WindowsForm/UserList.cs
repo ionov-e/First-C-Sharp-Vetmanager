@@ -11,7 +11,7 @@ using System.Windows.Forms;
 using static FirstCSharp.VetmanagerApiGateway;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
-namespace FirstCSharp
+namespace FirstCSharp.WindowsForm
 {
     public partial class UserList : Form
     {
@@ -34,6 +34,12 @@ namespace FirstCSharp
             string selectedOwnerId = comboBoxUserList.GetItemText(comboBoxUserList.SelectedValue) ?? throw new Exception("WTF? selectedOwnerId somehow is null");
             Pet[] pets = await _vetmanagerApiGateway.GetPetByClientId(Int32.Parse(selectedOwnerId));
             this.petDataGridView.DataSource = pets;
+        }
+
+        private void createButton_Click(object sender, EventArgs e)
+        {
+            PetForm form = new(_vetmanagerApiGateway);
+            form.Show();
         }
     }
 }

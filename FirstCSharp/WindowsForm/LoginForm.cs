@@ -1,10 +1,10 @@
 using FirstCSharp.DTO;
 
-namespace FirstCSharp
+namespace FirstCSharp.WindowsForm
 {
-    public partial class Login : Form
+    public partial class LoginForm : Form
     {
-        public Login()
+        public LoginForm()
         {
             InitializeComponent();
         }
