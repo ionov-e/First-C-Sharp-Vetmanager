@@ -1,4 +1,4 @@
-using FirstCSharp.DTO;
+using FirstCSharp.DTO.RootDataWithModel.Model;
 
 namespace FirstCSharp.WindowsForm
 {

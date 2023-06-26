@@ -4,11 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
-using static FirstCSharp.DTO.Client;
+using FirstCSharp.DTO.RootDataWithModel;
+using static FirstCSharp.DTO.RootDataWithModel.Model.Client;
 
 namespace FirstCSharp.DTO
 {
-    public class ApiResponse<T> where T : ModelDataInterface
+    public class EnitreApiResponse<T> where T : RootDataInterface
     {
         [JsonPropertyName("success")]
         public required bool IsSuccess { get; set; }

@@ -1,4 +1,7 @@
-﻿namespace FirstCSharp.WindowsForm
+﻿using FirstCSharp.DTO.RootDataWithModel;
+using FirstCSharp.DTO.RootDataWithModel.Model;
+
+namespace FirstCSharp.WindowsForm
 {
     partial class UserList
     {
@@ -74,7 +77,7 @@
             // 
             // clientListDataBindingSource
             // 
-            clientListDataBindingSource.DataSource = typeof(DTO.ClientListData);
+            clientListDataBindingSource.DataSource = typeof(ClientListData);
             // 
             // petDataGridView
             // 
@@ -153,11 +156,11 @@
             // 
             // petBindingSource
             // 
-            petBindingSource.DataSource = typeof(DTO.Pet);
+            petBindingSource.DataSource = typeof(Pet);
             // 
             // clientListDataBindingSource1
             // 
-            clientListDataBindingSource1.DataSource = typeof(DTO.ClientListData);
+            clientListDataBindingSource1.DataSource = typeof(ClientListData);
             // 
             // labelActionsWithSelected
             // 

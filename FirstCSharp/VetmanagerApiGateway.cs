@@ -1,4 +1,6 @@
 ﻿using FirstCSharp.DTO;
+using FirstCSharp.DTO.RootDataWithModel;
+using FirstCSharp.DTO.RootDataWithModel.Model;
 using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
 using System.Net.Http.Headers;
@@ -48,13 +50,13 @@ namespace FirstCSharp
             return apiResponse.Pets;
         }
 
-        public async Task<TModelData> GetModelsDataFromApi<TModelData>(PathUri pathUri) where TModelData: ModelDataInterface
+        public async Task<TModelData> GetModelsDataFromApi<TModelData>(PathUri pathUri) where TModelData: RootDataInterface
         {
             string uri = pathUri.ToString();
             string apiResponseAsJson = await httpClient.GetStringAsync(
                     uri
                 );
-            var apiResponse = JsonSerializer.Deserialize<ApiResponse<TModelData>>(apiResponseAsJson) ?? throw new Exception("Wrong API response");
+            var apiResponse = JsonSerializer.Deserialize<EnitreApiResponse<TModelData>>(apiResponseAsJson) ?? throw new Exception("Wrong API response");
             return apiResponse.Data;
         }
 

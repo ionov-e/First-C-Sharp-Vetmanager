@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using FirstCSharp.DTO.RootDataWithModel.Model;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,9 +8,9 @@ using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
-namespace FirstCSharp.DTO
+namespace FirstCSharp.DTO.RootDataWithModel
 {
-    public class ClientData : AbstractDataWithTotalCountAsInt
+    public class ClientData : AbstractRootDataWithTotalCountAsInt
     {
         [JsonPropertyName("client")]
         public required Client Client { get; set; }

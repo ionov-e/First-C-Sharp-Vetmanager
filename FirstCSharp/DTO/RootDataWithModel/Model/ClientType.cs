@@ -5,9 +5,9 @@ using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
-namespace FirstCSharp.DTO
+namespace FirstCSharp.DTO.RootDataWithModel.Model
 {
-    public class ClientType : DtoInterface
+    public class ClientType : ModelInterface
     {
         [JsonPropertyName("id")]
         public required string Id { get; set; }

@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FirstCSharp.DTO
+namespace FirstCSharp.DTO.RootDataWithModel.Model
 {
-    public interface ModelDataInterface
+    internal interface ModelInterface
     {
-        public int TotalNumber { get; set; }
+        public string Id { get; set; }
     }
 }

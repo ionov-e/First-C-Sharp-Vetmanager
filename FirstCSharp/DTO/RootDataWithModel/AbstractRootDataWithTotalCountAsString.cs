@@ -4,15 +4,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FirstCSharp.DTO
+namespace FirstCSharp.DTO.RootDataWithModel
 {
 
-    public class AbstractDataWithTotalCountAsString : ModelDataInterface
+    public class AbstractRootDataWithTotalCountAsString : RootDataInterface
     {
         public required string totalCount { get; set; }
         public int TotalNumber
         {
-            get { return Int32.Parse(totalCount); }
+            get { return int.Parse(totalCount); }
             set { totalCount = value.ToString(); }
         }
     }
