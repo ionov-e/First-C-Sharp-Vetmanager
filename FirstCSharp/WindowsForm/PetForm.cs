@@ -1,4 +1,5 @@
 ﻿using FirstCSharp.DTO.RootDataWithModel.Model;
+using FirstCSharp.DTO.RootDataWithModel.Model.Enum;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -18,7 +19,6 @@ namespace FirstCSharp.WindowsForm
 
         public PetForm(VetmanagerApiGateway vetmanagerApiGateway, Breed[] breeds, PetType[] petTypes) : this(vetmanagerApiGateway, breeds, petTypes, null)
         {
-            InitializeComponent();
         }
 
         public PetForm(VetmanagerApiGateway vetmanagerApiGateway, Breed[] breeds, PetType[] petTypes, Pet? pet)
@@ -34,6 +34,7 @@ namespace FirstCSharp.WindowsForm
             typeComboBox.DisplayMember = "Title";
             typeComboBox.ValueMember = "Id";
             typeComboBox.SelectedItem = null;
+            genderComboBox.DataSource = Enum.GetValues(typeof(PetGender));
         }
     }
 }
