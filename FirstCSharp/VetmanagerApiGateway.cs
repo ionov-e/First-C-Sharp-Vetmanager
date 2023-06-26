@@ -50,6 +50,18 @@ namespace FirstCSharp
             return apiResponse.Pets;
         }
 
+        public async Task<Breed[]> GetAllBreeds()
+        {
+            var apiResponse = await GetModelsDataFromApi<BreedListData>(new PathUri(Model.breed));
+            return apiResponse.Breeds ?? Array.Empty<Breed>();
+        }
+
+        public async Task<PetType[]> GetAllPetTypes()
+        {
+            var apiResponse = await GetModelsDataFromApi<PetTypeListData>(new PathUri(Model.petType));
+            return apiResponse.PetTypes ?? Array.Empty<PetType>();
+        }
+
         public async Task<TModelData> GetModelsDataFromApi<TModelData>(PathUri pathUri) where TModelData: RootDataInterface
         {
             string uri = pathUri.ToString();
@@ -62,8 +74,10 @@ namespace FirstCSharp
 
         public enum Model
         {
+            breed,
             client,
-            pet
+            pet,
+            petType
         }
 
         public class PathUri

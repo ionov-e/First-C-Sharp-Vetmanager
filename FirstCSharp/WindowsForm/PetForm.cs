@@ -16,17 +16,24 @@ namespace FirstCSharp.WindowsForm
         private readonly VetmanagerApiGateway _vetmanagerApiGateway;
         private readonly Pet? _pet;
 
-        public PetForm(VetmanagerApiGateway vetmanagerApiGateway)
+        public PetForm(VetmanagerApiGateway vetmanagerApiGateway, Breed[] breeds, PetType[] petTypes) : this(vetmanagerApiGateway, breeds, petTypes, null)
         {
             InitializeComponent();
-            _vetmanagerApiGateway = vetmanagerApiGateway;
         }
 
-        public PetForm(VetmanagerApiGateway vetmanagerApiGateway, Pet pet)
+        public PetForm(VetmanagerApiGateway vetmanagerApiGateway, Breed[] breeds, PetType[] petTypes, Pet? pet)
         {
             InitializeComponent();
             _vetmanagerApiGateway = vetmanagerApiGateway;
             _pet = pet;
+            breedComboBox.DataSource = breeds;
+            breedComboBox.DisplayMember = "Title";
+            breedComboBox.ValueMember = "Id";
+            breedComboBox.SelectedItem = null;
+            typeComboBox.DataSource = petTypes;
+            typeComboBox.DisplayMember = "Title";
+            typeComboBox.ValueMember = "Id";
+            typeComboBox.SelectedItem = null;
         }
     }
 }

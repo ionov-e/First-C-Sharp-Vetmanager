@@ -36,9 +36,11 @@ namespace FirstCSharp.WindowsForm
             this.petDataGridView.DataSource = pets;
         }
 
-        private void createButton_Click(object sender, EventArgs e)
+        private async void createButton_Click(object sender, EventArgs e)
         {
-            PetForm form = new(_vetmanagerApiGateway);
+            Breed[] breeds = await _vetmanagerApiGateway.GetAllBreeds();
+            PetType[] petTypes = await _vetmanagerApiGateway.GetAllPetTypes();
+            PetForm form = new(_vetmanagerApiGateway, breeds, petTypes);
             form.Show();
         }
     }

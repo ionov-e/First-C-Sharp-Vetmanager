@@ -77,7 +77,7 @@ namespace FirstCSharp.WindowsForm
             // 
             // clientListDataBindingSource
             // 
-            clientListDataBindingSource.DataSource = typeof(ClientListData);
+            clientListDataBindingSource.DataSource = typeof(BreedListData);
             // 
             // petDataGridView
             // 
@@ -160,7 +160,7 @@ namespace FirstCSharp.WindowsForm
             // 
             // clientListDataBindingSource1
             // 
-            clientListDataBindingSource1.DataSource = typeof(ClientListData);
+            clientListDataBindingSource1.DataSource = typeof(BreedListData);
             // 
             // labelActionsWithSelected
             // 
