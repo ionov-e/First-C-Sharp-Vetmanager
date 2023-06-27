@@ -17,18 +17,20 @@ namespace FirstCSharp.WindowsForm
 {
     public partial class PetForm : Form
     {
+        private UserList _userList;
         private readonly VetmanagerApiGateway _vetmanagerApiGateway;
         private readonly Pet? _pet;
         private readonly PetType[] _petTypes;
         private readonly int _ownerId;
 
-        public PetForm(VetmanagerApiGateway vetmanagerApiGateway, int ownerId, PetType[] petTypes) : this(vetmanagerApiGateway, ownerId, petTypes, null)
+        public PetForm(UserList userList, VetmanagerApiGateway vetmanagerApiGateway, int ownerId, PetType[] petTypes) : this(userList, vetmanagerApiGateway, ownerId, petTypes, null)
         {
         }
 
-        public PetForm(VetmanagerApiGateway vetmanagerApiGateway, int ownerId, PetType[] petTypes, Pet? pet)
+        public PetForm(UserList userList, VetmanagerApiGateway vetmanagerApiGateway, int ownerId, PetType[] petTypes, Pet? pet)
         {
             InitializeComponent();
+            _userList = userList;
             _vetmanagerApiGateway = vetmanagerApiGateway;
             _ownerId = ownerId;
             _pet = pet;
@@ -56,6 +58,7 @@ namespace FirstCSharp.WindowsForm
             try
             {
                 PetDataFromPostRequest petRootData = await _vetmanagerApiGateway.PostModelToApi<PetDataFromPostRequest>(new VetmanagerApiGateway.PathUri(VetmanagerApiGateway.Model.pet), pet);
+                _userList.updatePetTable();
                 this.Close();
             }
             catch (Exception ex) { MessageBox.Show("Exception message: " + ex.Message); }
