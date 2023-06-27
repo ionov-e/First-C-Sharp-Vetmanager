@@ -11,7 +11,7 @@ using System.Xml.Linq;
 
 namespace FirstCSharp.DTO.RootDataWithModel
 {
-    public class ClientListData : AbstractRootDataWithMultipleModels
+    public class ClientListData : AbstractContainerWithModelsAndStringCount
     {
         [JsonPropertyName("client")]
         public required Client[] Models { get; set; }

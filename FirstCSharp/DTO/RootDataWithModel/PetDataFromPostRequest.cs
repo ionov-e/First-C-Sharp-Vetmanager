@@ -10,14 +10,13 @@ using System.Threading.Tasks;
 
 namespace FirstCSharp.DTO.RootDataWithModel
 {
-    public class ClientData : AbstractContainerWithOneModelAndIntCount
+    public class PetDataFromPostRequest : AbstractContainerWithModelAndIntCount
     {
-        [JsonPropertyName("client")]
-        public required Client Model { get; set; }
-
-        public override Client GetModel()
+        [JsonPropertyName("pet")]
+        public required Pet[] Models { get; set; }
+        public override Pet GetModel()
         {
-            return Model;
+            return Models[0];
         }
     }
 }

@@ -4,6 +4,7 @@ using FirstCSharp.DTO.RootDataWithModel.Model;
 using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
 using System.Net.Http.Headers;
+using System.Text;
 using System.Text.Json;
 using System.Xml.Linq;
 using static FirstCSharp.VetmanagerApiGateway;
@@ -47,8 +48,8 @@ namespace FirstCSharp
         }
 
         public async Task<TModel> GetModel<TModel, TRootData>(Model model, int id)
-            where TModel: ModelInterface
-            where TRootData: AbstractRootDataWithOneModel
+            where TModel : ModelInterface
+            where TRootData : AbstractContainerWithOneModelAndIntCount
         {
             var apiResponse = await GetModelsDataFromApi<TRootData>(new PathUri(model, id));
             return (TModel)apiResponse.GetModel();
@@ -56,7 +57,7 @@ namespace FirstCSharp
 
         public async Task<TModel[]> GetModels<TModel, TRootData>(Model model)
             where TModel : ModelInterface
-            where TRootData : AbstractRootDataWithMultipleModels
+            where TRootData : AbstractContainerWithModelsAndStringCount
         {
             var apiResponse = await GetModelsDataFromApi<TRootData>(new PathUri(model));
             var modelsFromApi = apiResponse.GetModels();
@@ -70,13 +71,20 @@ namespace FirstCSharp
             return arrayOfModelsExplicitlyConverted;
         }
 
-        public async Task<TModelData> GetModelsDataFromApi<TModelData>(PathUri pathUri) where TModelData: RootDataInterface
+        public async Task<TRootModelData> GetModelsDataFromApi<TRootModelData>(PathUri pathUri) where TRootModelData : ContainerInterface
         {
-            string uri = pathUri.ToString();
-            string apiResponseAsJson = await httpClient.GetStringAsync(
-                    uri
-                );
-            var apiResponse = JsonSerializer.Deserialize<EnitreApiResponse<TModelData>>(apiResponseAsJson) ?? throw new Exception("Wrong API response");
+            string apiResponseAsJson = await httpClient.GetStringAsync(pathUri.ToString());
+            var apiResponse = JsonSerializer.Deserialize<EnitreApiResponse<TRootModelData>>(apiResponseAsJson) ?? throw new Exception("Wrong API response");
+            return apiResponse.Data;
+        }
+
+        public async Task<TRootDataWithModels> PostModelToApi<TRootDataWithModels>(PathUri pathUri, object objectForSerialization) where TRootDataWithModels : AbstractContainerWithModelAndIntCount
+        {
+            StringContent jsonContent = new(JsonSerializer.Serialize(objectForSerialization), Encoding.UTF8, "application/json" );
+            string pathUriAsString = pathUri.ToString();
+            HttpResponseMessage httpResponseMessage = await httpClient.PostAsync(pathUriAsString, jsonContent);
+            var jsonResponse = await httpResponseMessage.Content.ReadAsStringAsync();
+            var apiResponse = JsonSerializer.Deserialize<EnitreApiResponse<TRootDataWithModels>>(jsonResponse) ?? throw new Exception("Wrong API response");
             return apiResponse.Data;
         }
 
@@ -118,9 +126,11 @@ namespace FirstCSharp
 
             private string GetIdIfPresent() { return (id == null) ? "" : $"/{id}"; }
 
-            private string GetFiltersIfPresent() {
-                
-                if (!filters.Any()) {
+            private string GetFiltersIfPresent()
+            {
+
+                if (!filters.Any())
+                {
                     return "";
                 }
 
@@ -170,7 +180,7 @@ namespace FirstCSharp
                         : ", 'operator':'" + _operator + "'";
                 }
             }
-            
+
         }
     }
 }

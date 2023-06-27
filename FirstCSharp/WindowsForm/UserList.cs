@@ -32,17 +32,38 @@ namespace FirstCSharp.WindowsForm
 
         private async void comboBoxUserList_SelectionChangeCommitted(object sender, EventArgs e)
         {
-            string selectedOwnerId = comboBoxUserList.GetItemText(comboBoxUserList.SelectedValue) ?? throw new Exception("WTF? selectedOwnerId somehow is null");
-            Pet[] pets = await _vetmanagerApiGateway.GetPetByClientId(Int32.Parse(selectedOwnerId));
+            Pet[] pets = await _vetmanagerApiGateway.GetPetByClientId(GetClientIdOrThrow());
             this.petDataGridView.DataSource = pets;
         }
 
         private async void createButton_Click(object sender, EventArgs e)
         {
-            Breed[] breeds = await _vetmanagerApiGateway.GetAllBreeds();
+            if (!IsClientPicked())
+            {
+                MessageBox.Show("Firstly, pick client from the list to create a pet");
+                return;
+            }
+
             PetType[] petTypes = await _vetmanagerApiGateway.GetAllPetTypes();
-            PetForm form = new(_vetmanagerApiGateway, breeds, petTypes);
+            PetForm form = new(_vetmanagerApiGateway, GetClientIdOrThrow(), petTypes);
             form.Show();
+        }
+
+        private bool IsClientPicked()
+        {
+            return (GetClientIdAsNullableInt() != null);
+        }
+
+        private int GetClientIdOrThrow()
+        {
+            int? clientIdNullable = GetClientIdAsNullableInt();
+            return clientIdNullable ?? throw new Exception("Somehow client id was null");
+        }
+
+        private int? GetClientIdAsNullableInt()
+        {
+            string? selectedOwnerId = comboBoxUserList.GetItemText(comboBoxUserList.SelectedValue);
+            return (String.IsNullOrEmpty(selectedOwnerId)) ? null : Int32.Parse(selectedOwnerId);
         }
     }
 }

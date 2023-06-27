@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace FirstCSharp.DTO.RootDataWithModel
 {
-    abstract public class AbstractRootDataWithOneModel : RootDataInterface
+    abstract public class AbstractContainerWithOneModelAndIntCount : ContainerInterface
     {
         public required int totalCount { get; set; }
         public int TotalNumber

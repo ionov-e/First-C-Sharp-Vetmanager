@@ -105,6 +105,7 @@
             typeComboBox.Name = "typeComboBox";
             typeComboBox.Size = new Size(216, 23);
             typeComboBox.TabIndex = 6;
+            typeComboBox.SelectedIndexChanged += typeComboBox_SelectedIndexChanged;
             // 
             // breedComboBox
             // 
@@ -137,6 +138,7 @@
             saveButton.TabIndex = 10;
             saveButton.Text = "Save";
             saveButton.UseVisualStyleBackColor = true;
+            saveButton.Click += saveButton_Click;
             // 
             // PetForm
             // 

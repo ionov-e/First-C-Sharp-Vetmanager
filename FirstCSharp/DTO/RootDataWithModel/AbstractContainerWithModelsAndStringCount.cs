@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace FirstCSharp.DTO.RootDataWithModel
 {
 
-    abstract public class AbstractRootDataWithMultipleModels : RootDataInterface
+    abstract public class AbstractContainerWithModelsAndStringCount : ContainerInterface
     {
         public required string totalCount { get; set; }
         public int TotalNumber

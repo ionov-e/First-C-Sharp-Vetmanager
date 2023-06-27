@@ -17,7 +17,8 @@ namespace FirstCSharp.DTO.RootDataWithModel.Model
         public required string Picture { get; set; }
         [JsonPropertyName("type")]
         public string? Type { get; set; }
-
+        [JsonPropertyName("breeds")]
+        public Breed[]? Breeds { get; set; }
         public override string ToString()
         {
             return Title;
