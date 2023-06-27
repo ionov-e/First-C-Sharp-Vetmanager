@@ -106,6 +106,7 @@ namespace FirstCSharp.WindowsForm
             petDataGridView.RowTemplate.Height = 25;
             petDataGridView.Size = new Size(561, 307);
             petDataGridView.TabIndex = 2;
+            petDataGridView.SelectionChanged += petDataGridView_SelectionChanged;
             // 
             // aliasDataGridViewTextBoxColumn
             // 
