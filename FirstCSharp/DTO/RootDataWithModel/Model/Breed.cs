@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace FirstCSharp.DTO.RootDataWithModel.Model
 {
-    public class Breed
+    public class Breed : ModelInterface
     {
         [JsonPropertyName("id")]
         public required string Id { get; set; }

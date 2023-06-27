@@ -2,13 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace FirstCSharp.DTO.RootDataWithModel.Model
 {
-    public class Pet
+    public class Pet : ModelInterface
     {
-        public required string id { get; set; }
+        [JsonPropertyName("id")]
+        public required string Id { get; set; }
         public string? owner_id { get; set; }
         public string? type_id { get; set; }
         public required string alias { get; set; }

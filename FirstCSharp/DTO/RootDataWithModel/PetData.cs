@@ -10,9 +10,13 @@ using System.Threading.Tasks;
 
 namespace FirstCSharp.DTO.RootDataWithModel
 {
-    public class PetData : AbstractRootDataWithTotalCountAsInt
+    public class PetData : AbstractRootDataWithOneModel
     {
         [JsonPropertyName("pet")]
-        public required Pet Pet { get; set; }
+        public required Pet Model { get; set; }
+        public override Pet GetModel()
+        {
+            return Model;
+        }
     }
 }

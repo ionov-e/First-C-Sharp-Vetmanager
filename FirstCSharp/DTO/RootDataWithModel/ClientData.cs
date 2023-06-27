@@ -10,9 +10,14 @@ using System.Threading.Tasks;
 
 namespace FirstCSharp.DTO.RootDataWithModel
 {
-    public class ClientData : AbstractRootDataWithTotalCountAsInt
+    public class ClientData : AbstractRootDataWithOneModel
     {
         [JsonPropertyName("client")]
-        public required Client Client { get; set; }
+        public required Client Model { get; set; }
+
+        public override Client GetModel()
+        {
+            return Model;
+        }
     }
 }

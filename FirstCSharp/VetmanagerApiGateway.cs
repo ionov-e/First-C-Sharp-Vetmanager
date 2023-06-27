@@ -32,34 +32,42 @@ namespace FirstCSharp
             httpClient.DefaultRequestHeaders.Add("X-REST-API-KEY", apiKey);
         }
 
-        public async Task<Client> GetClient(int id)
-        {
-            var apiResponse = await GetModelsDataFromApi<ClientData>(new PathUri(Model.client, id));
-            return apiResponse.Client;
-        }
+        public async Task<Client[]> GetAllClients() { return await GetModels<Client, ClientListData>(Model.client); }
 
-        public async Task<Client[]> GetAllClients()
-        {
-            var apiResponse = await GetModelsDataFromApi<ClientListData>(new PathUri(Model.client));
-            return apiResponse.Clients ?? Array.Empty<Client>();
-        }
+        public async Task<Breed[]> GetAllBreeds() { return await GetModels<Breed, BreedListData>(Model.breed); }
+
+        public async Task<PetType[]> GetAllPetTypes() { return await GetModels<PetType, PetTypeListData>(Model.petType); }
+
+        public async Task<Client> GetClient(int id) { return await GetModel<Client, ClientData>(Model.client, id); }
 
         public async Task<Pet[]> GetPetByClientId(int id)
         {
             var apiResponse = await GetModelsDataFromApi<PetListData>(new PathUri(Model.pet, new[] { new Filter("owner_id", id.ToString()) }));
-            return apiResponse.Pets;
+            return apiResponse.GetModels();
         }
 
-        public async Task<Breed[]> GetAllBreeds()
+        public async Task<TModel> GetModel<TModel, TRootData>(Model model, int id)
+            where TModel: ModelInterface
+            where TRootData: AbstractRootDataWithOneModel
         {
-            var apiResponse = await GetModelsDataFromApi<BreedListData>(new PathUri(Model.breed));
-            return apiResponse.Breeds ?? Array.Empty<Breed>();
+            var apiResponse = await GetModelsDataFromApi<TRootData>(new PathUri(model, id));
+            return (TModel)apiResponse.GetModel();
         }
 
-        public async Task<PetType[]> GetAllPetTypes()
+        public async Task<TModel[]> GetModels<TModel, TRootData>(Model model)
+            where TModel : ModelInterface
+            where TRootData : AbstractRootDataWithMultipleModels
         {
-            var apiResponse = await GetModelsDataFromApi<PetTypeListData>(new PathUri(Model.petType));
-            return apiResponse.PetTypes ?? Array.Empty<PetType>();
+            var apiResponse = await GetModelsDataFromApi<TRootData>(new PathUri(model));
+            var modelsFromApi = apiResponse.GetModels();
+            TModel[] arrayOfModelsExplicitlyConverted = new TModel[modelsFromApi.Length];
+
+            for (int intCounter = 0; intCounter < modelsFromApi.Length; intCounter++)
+            {
+                arrayOfModelsExplicitlyConverted[intCounter] = (TModel)modelsFromApi[intCounter];
+            }
+
+            return arrayOfModelsExplicitlyConverted;
         }
 
         public async Task<TModelData> GetModelsDataFromApi<TModelData>(PathUri pathUri) where TModelData: RootDataInterface

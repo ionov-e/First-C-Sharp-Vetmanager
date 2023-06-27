@@ -1,4 +1,5 @@
-﻿using FirstCSharp.DTO.RootDataWithModel.Model;
+﻿using FirstCSharp.DTO.RootDataWithModel;
+using FirstCSharp.DTO.RootDataWithModel.Model;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;

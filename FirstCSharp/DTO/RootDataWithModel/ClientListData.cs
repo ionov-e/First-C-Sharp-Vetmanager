@@ -11,10 +11,14 @@ using System.Xml.Linq;
 
 namespace FirstCSharp.DTO.RootDataWithModel
 {
-    public class ClientListData : AbstractRootDataWithTotalCountAsString
+    public class ClientListData : AbstractRootDataWithMultipleModels
     {
         [JsonPropertyName("client")]
-        public required Client[] Clients { get; set; }
+        public required Client[] Models { get; set; }
+        public override Client[] GetModels()
+        {
+            return Models;
+        }
     }
 }
 

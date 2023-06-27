@@ -11,9 +11,13 @@ using System.Xml.Linq;
 
 namespace FirstCSharp.DTO.RootDataWithModel
 {
-    public class BreedListData : AbstractRootDataWithTotalCountAsString
+    public class BreedListData : AbstractRootDataWithMultipleModels
     {
         [JsonPropertyName("breed")]
-        public required Breed[] Breeds { get; set; }
+        public required Breed[] Models { get; set; }
+        public override Breed[] GetModels()
+        {
+            return Models;
+        }
     }
 }
