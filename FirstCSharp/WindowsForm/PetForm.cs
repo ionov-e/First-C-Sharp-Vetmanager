@@ -58,7 +58,7 @@ namespace FirstCSharp.WindowsForm
             try
             {
                 PetDataFromPostRequest petRootData = await _vetmanagerApiGateway.PostModelToApi<PetDataFromPostRequest>(new VetmanagerApiGateway.PathUri(VetmanagerApiGateway.Model.pet), pet);
-                _userList.updatePetTable();
+                _userList.UpdatePetTable();
                 this.Close();
             }
             catch (Exception ex) { MessageBox.Show("Exception message: " + ex.Message); }

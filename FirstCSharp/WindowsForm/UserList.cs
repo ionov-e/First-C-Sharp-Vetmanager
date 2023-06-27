@@ -6,6 +6,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -28,14 +29,18 @@ namespace FirstCSharp.WindowsForm
             comboBoxUserList.DisplayMember = "FullName";
             comboBoxUserList.ValueMember = "Id";
             comboBoxUserList.SelectedItem = null;
+            createButton.Enabled = false;
+            changeEditAndDeleteButtonStatesTo(false);
         }
 
         private void comboBoxUserList_SelectionChangeCommitted(object sender, EventArgs e)
         {
-            updatePetTable();
+            UpdatePetTable();
+            createButton.Enabled = IsClientPicked();
+            changeEditAndDeleteButtonStatesTo(false);
         }
 
-        public async void updatePetTable()
+        public async void UpdatePetTable()
         {
             Pet[] pets = await _vetmanagerApiGateway.GetPetByClientId(GetClientIdOrThrow());
             this.petDataGridView.DataSource = pets;
@@ -69,6 +74,32 @@ namespace FirstCSharp.WindowsForm
         {
             string? selectedOwnerId = comboBoxUserList.GetItemText(comboBoxUserList.SelectedValue);
             return (String.IsNullOrEmpty(selectedOwnerId)) ? null : Int32.Parse(selectedOwnerId);
+        }
+
+        private bool IsPetPicked()
+        {
+            return (GetPetIdAsNullableInt() != null);
+        }
+
+        private int? GetPetIdAsNullableInt()
+        {
+            if (petDataGridView.SelectedRows.Count == 0) return null;
+
+            int selectedrowindex = petDataGridView.SelectedCells[0].RowIndex;
+            DataGridViewRow selectedRow = petDataGridView.Rows[selectedrowindex];
+            string PetIdAsString = selectedRow.Cells["Id"].Value.ToString() ?? throw new Exception("Somehow couldn't read ID Column from Pet Row (Pet List)");
+            return Int32.Parse(PetIdAsString);
+        }
+
+        private void petDataGridView_SelectionChanged(object sender, EventArgs e)
+        {
+            changeEditAndDeleteButtonStatesTo(IsPetPicked());
+        }
+
+        private void changeEditAndDeleteButtonStatesTo(bool boolean)
+        {
+            editButton.Enabled = boolean;
+            deleteButton.Enabled = boolean;
         }
     }
 }
