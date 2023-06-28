@@ -30,14 +30,14 @@ namespace FirstCSharp.WindowsForm
             comboBoxUserList.ValueMember = "Id";
             comboBoxUserList.SelectedItem = null;
             createButton.Enabled = false;
-            changeEditAndDeleteButtonStates(false);
+            changeEditAndDeleteButtonStatesTo(false);
         }
 
         private void comboBoxUserList_SelectionChangeCommitted(object sender, EventArgs e)
         {
             UpdatePetTable();
             createButton.Enabled = IsClientPicked();
-            changeEditAndDeleteButtonStates(false);
+            changeEditAndDeleteButtonStatesTo(false);
         }
 
         public async void UpdatePetTable()
@@ -81,26 +81,22 @@ namespace FirstCSharp.WindowsForm
             return (GetPetIdAsNullableInt() != null);
         }
 
-        private int GetPetIdOrThrow()
-        {
-            int? petIdNullable = GetPetIdAsNullableInt();
-            return petIdNullable ?? throw new Exception("Somehow pet id was null");
-        }
-
         private int? GetPetIdAsNullableInt()
         {
-            if (petDataGridView.SelectedRows.Count  == 0) return null;
+            if (petDataGridView.SelectedRows.Count == 0) return null;
 
-            string? selectedPetId = petDataGridView.SelectedRows[0].Cells[0].Value.ToString();      //TODO
-            return (String.IsNullOrEmpty(selectedPetId)) ? null : Int32.Parse(selectedPetId);
+            int selectedrowindex = petDataGridView.SelectedCells[0].RowIndex;
+            DataGridViewRow selectedRow = petDataGridView.Rows[selectedrowindex];
+            string PetIdAsString = selectedRow.Cells["Id"].Value.ToString() ?? throw new Exception("Somehow couldn't read ID Column from Pet Row (Pet List)");
+            return Int32.Parse(PetIdAsString);
         }
 
         private void petDataGridView_SelectionChanged(object sender, EventArgs e)
         {
-             changeEditAndDeleteButtonStates(IsPetPicked());
+            changeEditAndDeleteButtonStatesTo(IsPetPicked());
         }
 
-        private void changeEditAndDeleteButtonStates(bool boolean)
+        private void changeEditAndDeleteButtonStatesTo(bool boolean)
         {
             editButton.Enabled = boolean;
             deleteButton.Enabled = boolean;

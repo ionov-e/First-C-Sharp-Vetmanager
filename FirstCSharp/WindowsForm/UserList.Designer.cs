@@ -37,17 +37,18 @@ namespace FirstCSharp.WindowsForm
             comboBoxUserList = new ComboBox();
             clientListDataBindingSource = new BindingSource(components);
             petDataGridView = new DataGridView();
-            aliasDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
-            breedidDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
-            typeDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
-            sexDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
-            birthdayDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
             petBindingSource = new BindingSource(components);
             clientListDataBindingSource1 = new BindingSource(components);
             labelActionsWithSelected = new Label();
             deleteButton = new Button();
             createButton = new Button();
             editButton = new Button();
+            Id = new DataGridViewTextBoxColumn();
+            aliasDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            breedidDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            typeDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            sexDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            birthdayDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)clientListDataBindingSource).BeginInit();
             ((System.ComponentModel.ISupportInitialize)petDataGridView).BeginInit();
             ((System.ComponentModel.ISupportInitialize)petBindingSource).BeginInit();
@@ -96,7 +97,7 @@ namespace FirstCSharp.WindowsForm
             dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
             petDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             petDataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            petDataGridView.Columns.AddRange(new DataGridViewColumn[] { aliasDataGridViewTextBoxColumn, breedidDataGridViewTextBoxColumn, typeDataGridViewTextBoxColumn, sexDataGridViewTextBoxColumn, birthdayDataGridViewTextBoxColumn });
+            petDataGridView.Columns.AddRange(new DataGridViewColumn[] { Id, aliasDataGridViewTextBoxColumn, breedidDataGridViewTextBoxColumn, typeDataGridViewTextBoxColumn, sexDataGridViewTextBoxColumn, birthdayDataGridViewTextBoxColumn });
             petDataGridView.DataSource = petBindingSource;
             petDataGridView.ImeMode = ImeMode.NoControl;
             petDataGridView.Location = new Point(23, 161);
@@ -107,43 +108,6 @@ namespace FirstCSharp.WindowsForm
             petDataGridView.Size = new Size(561, 307);
             petDataGridView.TabIndex = 2;
             petDataGridView.SelectionChanged += petDataGridView_SelectionChanged;
-            // 
-            // aliasDataGridViewTextBoxColumn
-            // 
-            aliasDataGridViewTextBoxColumn.DataPropertyName = "alias";
-            aliasDataGridViewTextBoxColumn.HeaderText = "Alias";
-            aliasDataGridViewTextBoxColumn.Name = "aliasDataGridViewTextBoxColumn";
-            aliasDataGridViewTextBoxColumn.ReadOnly = true;
-            aliasDataGridViewTextBoxColumn.Width = 150;
-            // 
-            // breedidDataGridViewTextBoxColumn
-            // 
-            breedidDataGridViewTextBoxColumn.DataPropertyName = "breed";
-            breedidDataGridViewTextBoxColumn.HeaderText = "Breed";
-            breedidDataGridViewTextBoxColumn.Name = "breedidDataGridViewTextBoxColumn";
-            breedidDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // typeDataGridViewTextBoxColumn
-            // 
-            typeDataGridViewTextBoxColumn.DataPropertyName = "type";
-            typeDataGridViewTextBoxColumn.HeaderText = "Type";
-            typeDataGridViewTextBoxColumn.Name = "typeDataGridViewTextBoxColumn";
-            typeDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // sexDataGridViewTextBoxColumn
-            // 
-            sexDataGridViewTextBoxColumn.DataPropertyName = "sex";
-            sexDataGridViewTextBoxColumn.HeaderText = "Gender";
-            sexDataGridViewTextBoxColumn.Name = "sexDataGridViewTextBoxColumn";
-            sexDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // birthdayDataGridViewTextBoxColumn
-            // 
-            birthdayDataGridViewTextBoxColumn.DataPropertyName = "birthday";
-            birthdayDataGridViewTextBoxColumn.HeaderText = "Birthday";
-            birthdayDataGridViewTextBoxColumn.Name = "birthdayDataGridViewTextBoxColumn";
-            birthdayDataGridViewTextBoxColumn.ReadOnly = true;
-            birthdayDataGridViewTextBoxColumn.Width = 70;
             // 
             // petBindingSource
             // 
@@ -190,6 +154,57 @@ namespace FirstCSharp.WindowsForm
             editButton.Text = "Edit";
             editButton.UseVisualStyleBackColor = true;
             // 
+            // Id
+            // 
+            Id.DataPropertyName = "Id";
+            Id.Frozen = true;
+            Id.HeaderText = "Id";
+            Id.Name = "Id";
+            Id.ReadOnly = true;
+            Id.Visible = false;
+            // 
+            // aliasDataGridViewTextBoxColumn
+            // 
+            aliasDataGridViewTextBoxColumn.DataPropertyName = "alias";
+            aliasDataGridViewTextBoxColumn.Frozen = true;
+            aliasDataGridViewTextBoxColumn.HeaderText = "Alias";
+            aliasDataGridViewTextBoxColumn.Name = "aliasDataGridViewTextBoxColumn";
+            aliasDataGridViewTextBoxColumn.ReadOnly = true;
+            aliasDataGridViewTextBoxColumn.Width = 150;
+            // 
+            // breedidDataGridViewTextBoxColumn
+            // 
+            breedidDataGridViewTextBoxColumn.DataPropertyName = "breed";
+            breedidDataGridViewTextBoxColumn.Frozen = true;
+            breedidDataGridViewTextBoxColumn.HeaderText = "Breed";
+            breedidDataGridViewTextBoxColumn.Name = "breedidDataGridViewTextBoxColumn";
+            breedidDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // typeDataGridViewTextBoxColumn
+            // 
+            typeDataGridViewTextBoxColumn.DataPropertyName = "type";
+            typeDataGridViewTextBoxColumn.Frozen = true;
+            typeDataGridViewTextBoxColumn.HeaderText = "Type";
+            typeDataGridViewTextBoxColumn.Name = "typeDataGridViewTextBoxColumn";
+            typeDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // sexDataGridViewTextBoxColumn
+            // 
+            sexDataGridViewTextBoxColumn.DataPropertyName = "sex";
+            sexDataGridViewTextBoxColumn.Frozen = true;
+            sexDataGridViewTextBoxColumn.HeaderText = "Gender";
+            sexDataGridViewTextBoxColumn.Name = "sexDataGridViewTextBoxColumn";
+            sexDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // birthdayDataGridViewTextBoxColumn
+            // 
+            birthdayDataGridViewTextBoxColumn.DataPropertyName = "birthday";
+            birthdayDataGridViewTextBoxColumn.Frozen = true;
+            birthdayDataGridViewTextBoxColumn.HeaderText = "Birthday";
+            birthdayDataGridViewTextBoxColumn.Name = "birthdayDataGridViewTextBoxColumn";
+            birthdayDataGridViewTextBoxColumn.ReadOnly = true;
+            birthdayDataGridViewTextBoxColumn.Width = 70;
+            // 
             // UserList
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -226,6 +241,7 @@ namespace FirstCSharp.WindowsForm
         private Button createButton;
         private Button editButton;
         private DataGridViewTextBoxColumn idDataGridViewTextBoxColumn;
+        private DataGridViewTextBoxColumn Id;
         private DataGridViewTextBoxColumn aliasDataGridViewTextBoxColumn;
         private DataGridViewTextBoxColumn breedidDataGridViewTextBoxColumn;
         private DataGridViewTextBoxColumn typeDataGridViewTextBoxColumn;
