@@ -74,7 +74,7 @@ namespace FirstCSharp
         public async Task<TRootModelData> GetModelsDataFromApi<TRootModelData>(PathUri pathUri) where TRootModelData : ContainerInterface
         {
             string apiResponseAsJson = await httpClient.GetStringAsync(pathUri.ToString());
-            var apiResponse = JsonSerializer.Deserialize<EnitreApiResponse<TRootModelData>>(apiResponseAsJson) ?? throw new Exception("Wrong API response");
+            var apiResponse = JsonSerializer.Deserialize<EnitreApiResponse<TRootModelData>>(apiResponseAsJson) ?? throw new Exception("Wrong API response from Get Request");
             return apiResponse.Data;
         }
 
@@ -84,8 +84,23 @@ namespace FirstCSharp
             string pathUriAsString = pathUri.ToString();
             HttpResponseMessage httpResponseMessage = await httpClient.PostAsync(pathUriAsString, jsonContent);
             var jsonResponse = await httpResponseMessage.Content.ReadAsStringAsync();
-            var apiResponse = JsonSerializer.Deserialize<EnitreApiResponse<TRootDataWithModels>>(jsonResponse) ?? throw new Exception("Wrong API response");
+            var apiResponse = JsonSerializer.Deserialize<EnitreApiResponse<TRootDataWithModels>>(jsonResponse) ?? throw new Exception("Wrong API response from Get Request");
             return apiResponse.Data;
+        }
+
+        /// <summary>
+        /// Returns deleted ID on success or throws on fail
+        /// </summary>
+        /// <param name="pathUri"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
+        public async Task<int> DeleteModelFromApi(PathUri pathUri)
+        {
+            string pathUriAsString = pathUri.ToString();
+            HttpResponseMessage httpResponseMessage = await httpClient.DeleteAsync(pathUriAsString);
+            var jsonResponse = await httpResponseMessage.Content.ReadAsStringAsync();
+            var apiResponse = JsonSerializer.Deserialize<EnitreApiResponse<RootDataFromDelete>>(jsonResponse) ?? throw new Exception("Wrong API response from Delete Request");
+            return apiResponse.Data.Id;
         }
 
         public enum Model

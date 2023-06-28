@@ -37,18 +37,18 @@ namespace FirstCSharp.WindowsForm
             comboBoxUserList = new ComboBox();
             clientListDataBindingSource = new BindingSource(components);
             petDataGridView = new DataGridView();
-            petBindingSource = new BindingSource(components);
-            clientListDataBindingSource1 = new BindingSource(components);
-            labelActionsWithSelected = new Label();
-            deleteButton = new Button();
-            createButton = new Button();
-            editButton = new Button();
             Id = new DataGridViewTextBoxColumn();
             aliasDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
             breedidDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
             typeDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
             sexDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
             birthdayDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            petBindingSource = new BindingSource(components);
+            clientListDataBindingSource1 = new BindingSource(components);
+            labelActionsWithSelected = new Label();
+            deleteButton = new Button();
+            createButton = new Button();
+            editButton = new Button();
             ((System.ComponentModel.ISupportInitialize)clientListDataBindingSource).BeginInit();
             ((System.ComponentModel.ISupportInitialize)petDataGridView).BeginInit();
             ((System.ComponentModel.ISupportInitialize)petBindingSource).BeginInit();
@@ -109,51 +109,6 @@ namespace FirstCSharp.WindowsForm
             petDataGridView.TabIndex = 2;
             petDataGridView.SelectionChanged += petDataGridView_SelectionChanged;
             // 
-            // petBindingSource
-            // 
-            petBindingSource.DataSource = typeof(Pet);
-            // 
-            // clientListDataBindingSource1
-            // 
-            clientListDataBindingSource1.DataSource = typeof(BreedListData);
-            // 
-            // labelActionsWithSelected
-            // 
-            labelActionsWithSelected.AutoSize = true;
-            labelActionsWithSelected.Location = new Point(29, 99);
-            labelActionsWithSelected.Name = "labelActionsWithSelected";
-            labelActionsWithSelected.Size = new Size(140, 15);
-            labelActionsWithSelected.TabIndex = 3;
-            labelActionsWithSelected.Text = "Action with selected row:";
-            // 
-            // deleteButton
-            // 
-            deleteButton.Location = new Point(278, 95);
-            deleteButton.Name = "deleteButton";
-            deleteButton.Size = new Size(75, 23);
-            deleteButton.TabIndex = 5;
-            deleteButton.Text = "Delete";
-            deleteButton.UseVisualStyleBackColor = true;
-            // 
-            // createButton
-            // 
-            createButton.Location = new Point(434, 95);
-            createButton.Name = "createButton";
-            createButton.Size = new Size(150, 23);
-            createButton.TabIndex = 6;
-            createButton.Text = "Create New Pet";
-            createButton.UseVisualStyleBackColor = true;
-            createButton.Click += createButton_Click;
-            // 
-            // editButton
-            // 
-            editButton.Location = new Point(184, 95);
-            editButton.Name = "editButton";
-            editButton.Size = new Size(75, 23);
-            editButton.TabIndex = 7;
-            editButton.Text = "Edit";
-            editButton.UseVisualStyleBackColor = true;
-            // 
             // Id
             // 
             Id.DataPropertyName = "Id";
@@ -204,6 +159,52 @@ namespace FirstCSharp.WindowsForm
             birthdayDataGridViewTextBoxColumn.Name = "birthdayDataGridViewTextBoxColumn";
             birthdayDataGridViewTextBoxColumn.ReadOnly = true;
             birthdayDataGridViewTextBoxColumn.Width = 70;
+            // 
+            // petBindingSource
+            // 
+            petBindingSource.DataSource = typeof(Pet);
+            // 
+            // clientListDataBindingSource1
+            // 
+            clientListDataBindingSource1.DataSource = typeof(BreedListData);
+            // 
+            // labelActionsWithSelected
+            // 
+            labelActionsWithSelected.AutoSize = true;
+            labelActionsWithSelected.Location = new Point(29, 99);
+            labelActionsWithSelected.Name = "labelActionsWithSelected";
+            labelActionsWithSelected.Size = new Size(140, 15);
+            labelActionsWithSelected.TabIndex = 3;
+            labelActionsWithSelected.Text = "Action with selected row:";
+            // 
+            // deleteButton
+            // 
+            deleteButton.Location = new Point(278, 95);
+            deleteButton.Name = "deleteButton";
+            deleteButton.Size = new Size(75, 23);
+            deleteButton.TabIndex = 5;
+            deleteButton.Text = "Delete";
+            deleteButton.UseVisualStyleBackColor = true;
+            deleteButton.Click += deleteButton_Click;
+            // 
+            // createButton
+            // 
+            createButton.Location = new Point(434, 95);
+            createButton.Name = "createButton";
+            createButton.Size = new Size(150, 23);
+            createButton.TabIndex = 6;
+            createButton.Text = "Create New Pet";
+            createButton.UseVisualStyleBackColor = true;
+            createButton.Click += createButton_Click;
+            // 
+            // editButton
+            // 
+            editButton.Location = new Point(184, 95);
+            editButton.Name = "editButton";
+            editButton.Size = new Size(75, 23);
+            editButton.TabIndex = 7;
+            editButton.Text = "Edit";
+            editButton.UseVisualStyleBackColor = true;
             // 
             // UserList
             // 

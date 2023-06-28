@@ -36,52 +36,58 @@ namespace FirstCSharp.WindowsForm
         private void comboBoxUserList_SelectionChangeCommitted(object sender, EventArgs e)
         {
             UpdatePetTable();
-            createButton.Enabled = IsClientPicked();
+            createButton.Enabled = IsClientSelected();
             changeEditAndDeleteButtonStatesTo(false);
         }
 
         public async void UpdatePetTable()
         {
-            Pet[] pets = await _vetmanagerApiGateway.GetPetByClientId(GetClientIdOrThrow());
+            Pet[] pets = await _vetmanagerApiGateway.GetPetByClientId(GetSelectedClientIdOrThrow());
             this.petDataGridView.DataSource = pets;
         }
 
         private async void createButton_Click(object sender, EventArgs e)
         {
-            if (!IsClientPicked())
+            if (!IsClientSelected())
             {
                 MessageBox.Show("Firstly, pick client from the list to create a pet");
                 return;
             }
 
             PetType[] petTypes = await _vetmanagerApiGateway.GetAllPetTypes();
-            PetForm form = new(this, _vetmanagerApiGateway, GetClientIdOrThrow(), petTypes);
+            PetForm form = new(this, _vetmanagerApiGateway, GetSelectedClientIdOrThrow(), petTypes);
             form.Show();
         }
 
-        private bool IsClientPicked()
+        private bool IsClientSelected()
         {
-            return (GetClientIdAsNullableInt() != null);
+            return (GetSelectedClientIdAsNullableInt() != null);
         }
 
-        private int GetClientIdOrThrow()
+        private int GetSelectedClientIdOrThrow()
         {
-            int? clientIdNullable = GetClientIdAsNullableInt();
+            int? clientIdNullable = GetSelectedClientIdAsNullableInt();
             return clientIdNullable ?? throw new Exception("Somehow client id was null");
         }
 
-        private int? GetClientIdAsNullableInt()
+        private int? GetSelectedClientIdAsNullableInt()
         {
             string? selectedOwnerId = comboBoxUserList.GetItemText(comboBoxUserList.SelectedValue);
             return (String.IsNullOrEmpty(selectedOwnerId)) ? null : Int32.Parse(selectedOwnerId);
         }
 
-        private bool IsPetPicked()
+        private bool IsPetSelected()
         {
-            return (GetPetIdAsNullableInt() != null);
+            return (GetSelectedPetIdAsNullableInt() != null);
         }
 
-        private int? GetPetIdAsNullableInt()
+        private int GetPetIdOrThrow()
+        {
+            int? petIdNullable = GetSelectedPetIdAsNullableInt();
+            return petIdNullable ?? throw new Exception("Somehow pet id was null");
+        }
+
+        private int? GetSelectedPetIdAsNullableInt()
         {
             if (petDataGridView.SelectedRows.Count == 0) return null;
 
@@ -93,13 +99,28 @@ namespace FirstCSharp.WindowsForm
 
         private void petDataGridView_SelectionChanged(object sender, EventArgs e)
         {
-            changeEditAndDeleteButtonStatesTo(IsPetPicked());
+            changeEditAndDeleteButtonStatesTo(IsPetSelected());
         }
 
+        /// <summary>
+        /// Enables or disables Edit and Deletes button. Enables if parameter is true, disables if parameter is false
+        /// </summary>
+        /// <param name="boolean"></param>
         private void changeEditAndDeleteButtonStatesTo(bool boolean)
         {
             editButton.Enabled = boolean;
             deleteButton.Enabled = boolean;
+        }
+
+        private async void deleteButton_Click(object sender, EventArgs e)
+        {
+            int selectedPetId = GetPetIdOrThrow();
+            try {
+                int deletedPetId = await _vetmanagerApiGateway.DeleteModelFromApi(new PathUri(Model.pet, selectedPetId));
+                if (deletedPetId != selectedPetId) { throw new Exception($"Somehow Deleted Pet Id ({deletedPetId}) is different from intended one ({selectedPetId})"); }
+                UpdatePetTable();
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message); }
         }
     }
 }
