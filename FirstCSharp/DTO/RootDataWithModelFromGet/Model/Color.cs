@@ -7,10 +7,8 @@ using System.Threading.Tasks;
 
 namespace FirstCSharp.DTO.RootDataWithModel.Model
 {
-    public class Color : ModelInterface
+    public class Color : AbstractModel
     {
-        [JsonPropertyName("id")]
-        public required string Id { get; set; }
         public required string combo_manual_id { get; set; }
         public required string title { get; set; }
         public required string value { get; set; }

@@ -205,6 +205,7 @@ namespace FirstCSharp.WindowsForm
             editButton.TabIndex = 7;
             editButton.Text = "Edit";
             editButton.UseVisualStyleBackColor = true;
+            editButton.Click += editButton_Click;
             // 
             // UserList
             // 

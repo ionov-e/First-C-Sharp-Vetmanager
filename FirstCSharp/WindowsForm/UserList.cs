@@ -19,6 +19,7 @@ namespace FirstCSharp.WindowsForm
     {
         private readonly VetmanagerApiGateway _vetmanagerApiGateway;
         private readonly Client[] _clients;
+        private Pet[] _loadedPetsForSelectedClient;
 
         public UserList(VetmanagerApiGateway vetmanagerApiGateway, Client[] clients)
         {
@@ -42,8 +43,8 @@ namespace FirstCSharp.WindowsForm
 
         public async void UpdatePetTable()
         {
-            Pet[] pets = await _vetmanagerApiGateway.GetPetByClientId(GetSelectedClientIdOrThrow());
-            this.petDataGridView.DataSource = pets;
+            _loadedPetsForSelectedClient = await _vetmanagerApiGateway.GetPetByClientId(GetSelectedClientIdOrThrow());
+            this.petDataGridView.DataSource = _loadedPetsForSelectedClient;
         }
 
         private async void createButton_Click(object sender, EventArgs e)
@@ -57,6 +58,39 @@ namespace FirstCSharp.WindowsForm
             PetType[] petTypes = await _vetmanagerApiGateway.GetAllPetTypes();
             PetForm form = new(this, _vetmanagerApiGateway, GetSelectedClientIdOrThrow(), petTypes);
             form.Show();
+        }
+
+
+        private async void editButton_Click(object sender, EventArgs e)
+        {
+            int selectedPetId = GetPetIdOrThrow();
+            PetType[] petTypes = await _vetmanagerApiGateway.GetAllPetTypes();
+            Pet pet = GetPetFromListById(selectedPetId);
+            PetForm form = new(this, _vetmanagerApiGateway, GetSelectedClientIdOrThrow(), petTypes, pet);
+            form.Show();
+        }
+
+        private Pet GetPetFromListById(int petId)
+        {
+            foreach (Pet pet in _loadedPetsForSelectedClient)
+            {
+                if (pet.Id == petId) return pet;
+            }
+
+            throw new Exception("Couldn't find selected pet id in Pet List");
+        }
+        
+
+        private async void deleteButton_Click(object sender, EventArgs e)
+        {
+            int selectedPetId = GetPetIdOrThrow();
+            try
+            {
+                int deletedPetId = await _vetmanagerApiGateway.DeleteModelFromApi(new PathUri(Model.pet, selectedPetId));
+                if (deletedPetId != selectedPetId) { throw new Exception($"Somehow Deleted Pet Id ({deletedPetId}) is different from intended one ({selectedPetId})"); }
+                UpdatePetTable();
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message); }
         }
 
         private bool IsClientSelected()
@@ -110,17 +144,6 @@ namespace FirstCSharp.WindowsForm
         {
             editButton.Enabled = boolean;
             deleteButton.Enabled = boolean;
-        }
-
-        private async void deleteButton_Click(object sender, EventArgs e)
-        {
-            int selectedPetId = GetPetIdOrThrow();
-            try {
-                int deletedPetId = await _vetmanagerApiGateway.DeleteModelFromApi(new PathUri(Model.pet, selectedPetId));
-                if (deletedPetId != selectedPetId) { throw new Exception($"Somehow Deleted Pet Id ({deletedPetId}) is different from intended one ({selectedPetId})"); }
-                UpdatePetTable();
-            }
-            catch (Exception ex) { MessageBox.Show(ex.Message); }
         }
     }
 }

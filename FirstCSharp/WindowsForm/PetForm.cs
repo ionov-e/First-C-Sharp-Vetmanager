@@ -7,6 +7,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Dynamic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,23 +20,23 @@ namespace FirstCSharp.WindowsForm
     {
         private UserList _userList;
         private readonly VetmanagerApiGateway _vetmanagerApiGateway;
-        private readonly Pet? _pet;
-        private readonly PetType[] _petTypes;
+        private readonly Pet? _petToEdit;
+        private readonly PetType[] _petTypesWithBreeds;
         private readonly int _ownerId;
 
         public PetForm(UserList userList, VetmanagerApiGateway vetmanagerApiGateway, int ownerId, PetType[] petTypes) : this(userList, vetmanagerApiGateway, ownerId, petTypes, null)
         {
         }
 
-        public PetForm(UserList userList, VetmanagerApiGateway vetmanagerApiGateway, int ownerId, PetType[] petTypes, Pet? pet)
+        public PetForm(UserList userList, VetmanagerApiGateway vetmanagerApiGateway, int ownerId, PetType[] petTypesWithBreeds, Pet? petToEdit)
         {
             InitializeComponent();
             _userList = userList;
             _vetmanagerApiGateway = vetmanagerApiGateway;
             _ownerId = ownerId;
-            _pet = pet;
-            _petTypes = petTypes;
-            typeComboBox.DataSource = _petTypes;
+            _petToEdit = petToEdit;
+            _petTypesWithBreeds = petTypesWithBreeds;
+            typeComboBox.DataSource = _petTypesWithBreeds;
             typeComboBox.DisplayMember = "Title";
             typeComboBox.ValueMember = "Id";
             typeComboBox.SelectedItem = null;
@@ -43,33 +44,78 @@ namespace FirstCSharp.WindowsForm
             breedComboBox.ValueMember = "Id";
             breedComboBox.SelectedItem = null;
             genderComboBox.DataSource = Enum.GetValues(typeof(PetGender));
+            FillPetDataIfGiven();
+        }
+
+        private void FillPetDataIfGiven()
+        {
+            if (_petToEdit == null) { return; }
+
+            aliasTextBox.Text = _petToEdit.alias;
+
+            if (_petToEdit.type_id  != null)
+            {
+                typeComboBox.SelectedItem = GetPetTypeByIdFromList(Int32.Parse(_petToEdit.type_id));
+                FillBreedsIntoComboxUsingSelectedPetType();
+
+                if (_petToEdit.breed_id != null) { breedComboBox.SelectedItem = GetBreedByIdFromList(Int32.Parse(_petToEdit.breed_id));
+                } else { breedComboBox.SelectedItem = null; }
+            }
+
+            if (_petToEdit.sex != null) {genderComboBox.SelectedItem = (PetGender)Enum.Parse(typeof(PetGender), _petToEdit.sex); }
+            if (_petToEdit.birthday != null) { birthdayDateTimePicker.Value = DateTime.ParseExact(_petToEdit.birthday, "yyyy-MM-dd", new CultureInfo("ru-RU")); }
+        }
+
+        private PetType GetPetTypeByIdFromList(int petTypeId)
+        { 
+            foreach (PetType petType in _petTypesWithBreeds) {
+                if (petType.Id == petTypeId) {  return petType; }
+            }
+            throw new Exception("Failed to find PetType by Id in list");
+        }
+
+        private Breed GetBreedByIdFromList(int breedId)
+        {
+            Breed[] breeds = GetBreedsForSelectedPetType();
+            foreach (Breed breed in breeds)
+            {
+                if (breed.Id == breedId) { return breed; }
+            }
+            throw new Exception("Failed to find Breed by Id in list");
         }
 
         private async void saveButton_Click(object sender, EventArgs e)
         {
-            dynamic pet = new ExpandoObject();
-            pet.owner_id = _ownerId;
-            pet.alias = aliasTextBox.Text;
-            SetPetTypeIdIfSelected(pet);
-            SetBreedIdIfSelected(pet);
-            pet.sex = genderComboBox.Text;
-            pet.birthday = birthdayDateTimePicker.Value.ToString("yyyy-MM-dd");
+            dynamic petObjectToSend = new ExpandoObject();
+            petObjectToSend.owner_id = _ownerId;
+            petObjectToSend.alias = aliasTextBox.Text;
+            SetPetTypeIdIfSelected(petObjectToSend);
+            SetBreedIdIfSelected(petObjectToSend);
+            petObjectToSend.sex = genderComboBox.Text;
+            petObjectToSend.birthday = birthdayDateTimePicker.Value.ToString("yyyy-MM-dd");
 
             try
             {
-                PetDataFromPostRequest petRootData = await _vetmanagerApiGateway.PostModelToApi<PetDataFromPostRequest>(new VetmanagerApiGateway.PathUri(VetmanagerApiGateway.Model.pet), pet);
+                if (_petToEdit == null) { PetDataAfterPostOrPutRequest petRootData = await _vetmanagerApiGateway.CreateModel<PetDataAfterPostOrPutRequest>(new VetmanagerApiGateway.PathUri(VetmanagerApiGateway.Model.pet), petObjectToSend); }
+                else { PetData petRootData = await _vetmanagerApiGateway.UpdateModel<PetData>(new VetmanagerApiGateway.PathUri(VetmanagerApiGateway.Model.pet, _petToEdit.Id), petObjectToSend);}
+                
                 _userList.UpdatePetTable();
                 this.Close();
             }
             catch (Exception ex) { MessageBox.Show("Exception message: " + ex.Message); }
         }
-
+         
         private void typeComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            breedComboBox.DataSource = GetBreedsForPetType();
+            FillBreedsIntoComboxUsingSelectedPetType();
         }
 
-        private Breed[] GetBreedsForPetType()
+        private void FillBreedsIntoComboxUsingSelectedPetType()
+        {
+            breedComboBox.DataSource = GetBreedsForSelectedPetType();
+        }
+
+        private Breed[] GetBreedsForSelectedPetType()
         {
             int? selectedPetTypeIdNullable = GetSelectedPetTypeIdNullable();
 
@@ -80,11 +126,9 @@ namespace FirstCSharp.WindowsForm
 
             int selectedPetTypeId = GetSelectedPetTypeIdOrThrow();
 
-            string selectedOwnerIdAsText = selectedPetTypeId.ToString();
-
-            foreach (PetType petType in _petTypes)
+            foreach (PetType petType in _petTypesWithBreeds)
             {
-                if (petType.Id == selectedOwnerIdAsText)
+                if (petType.Id == selectedPetTypeId)
                 {
                     return petType.Breeds ?? Array.Empty<Breed>();
                 }

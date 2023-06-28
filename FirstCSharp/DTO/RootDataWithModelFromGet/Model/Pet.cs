@@ -7,10 +7,8 @@ using System.Threading.Tasks;
 
 namespace FirstCSharp.DTO.RootDataWithModel.Model
 {
-    public class Pet : ModelInterface
+    public class Pet : AbstractModel
     {
-        [JsonPropertyName("id")]
-        public required string Id { get; set; }
         public string? owner_id { get; set; }
         public string? type_id { get; set; }
         public required string alias { get; set; }

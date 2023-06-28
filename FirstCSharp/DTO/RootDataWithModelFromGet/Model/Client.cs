@@ -7,10 +7,8 @@ using System.Threading.Tasks;
 
 namespace FirstCSharp.DTO.RootDataWithModel.Model
 {
-    public class Client : ModelInterface
+    public class Client : AbstractModel
     {
-        [JsonPropertyName("id")]
-        public required string Id { get; set; }
         [JsonPropertyName("address")]
         public required string Address { get; set; }
         [JsonPropertyName("home_phone")]

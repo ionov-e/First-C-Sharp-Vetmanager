@@ -16,6 +16,6 @@ namespace FirstCSharp.DTO.RootDataWithModel
             get { return int.Parse(totalCount); }
             set { totalCount = value.ToString(); }
         }
-        abstract public ModelInterface[] GetModels();
+        abstract public AbstractModel[] GetModels();
     }
 }
