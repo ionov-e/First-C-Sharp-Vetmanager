@@ -37,7 +37,6 @@ namespace FirstCSharp.WindowsForm
             comboBoxUserList = new ComboBox();
             clientListDataBindingSource = new BindingSource(components);
             petDataGridView = new DataGridView();
-            idDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
             aliasDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
             breedidDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
             typeDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
@@ -97,7 +96,7 @@ namespace FirstCSharp.WindowsForm
             dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
             petDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             petDataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            petDataGridView.Columns.AddRange(new DataGridViewColumn[] { idDataGridViewTextBoxColumn, aliasDataGridViewTextBoxColumn, breedidDataGridViewTextBoxColumn, typeDataGridViewTextBoxColumn, sexDataGridViewTextBoxColumn, birthdayDataGridViewTextBoxColumn });
+            petDataGridView.Columns.AddRange(new DataGridViewColumn[] { aliasDataGridViewTextBoxColumn, breedidDataGridViewTextBoxColumn, typeDataGridViewTextBoxColumn, sexDataGridViewTextBoxColumn, birthdayDataGridViewTextBoxColumn });
             petDataGridView.DataSource = petBindingSource;
             petDataGridView.ImeMode = ImeMode.NoControl;
             petDataGridView.Location = new Point(23, 161);
@@ -105,17 +104,8 @@ namespace FirstCSharp.WindowsForm
             petDataGridView.Name = "petDataGridView";
             petDataGridView.ReadOnly = true;
             petDataGridView.RowTemplate.Height = 25;
-            petDataGridView.Size = new Size(613, 307);
+            petDataGridView.Size = new Size(561, 307);
             petDataGridView.TabIndex = 2;
-            // 
-            // idDataGridViewTextBoxColumn
-            // 
-            idDataGridViewTextBoxColumn.DataPropertyName = "id";
-            idDataGridViewTextBoxColumn.HeaderText = "Id";
-            idDataGridViewTextBoxColumn.MinimumWidth = 4;
-            idDataGridViewTextBoxColumn.Name = "idDataGridViewTextBoxColumn";
-            idDataGridViewTextBoxColumn.ReadOnly = true;
-            idDataGridViewTextBoxColumn.Width = 50;
             // 
             // aliasDataGridViewTextBoxColumn
             // 
@@ -182,7 +172,7 @@ namespace FirstCSharp.WindowsForm
             // 
             // createButton
             // 
-            createButton.Location = new Point(470, 95);
+            createButton.Location = new Point(434, 95);
             createButton.Name = "createButton";
             createButton.Size = new Size(150, 23);
             createButton.TabIndex = 6;
@@ -203,7 +193,7 @@ namespace FirstCSharp.WindowsForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(661, 489);
+            ClientSize = new Size(608, 489);
             Controls.Add(editButton);
             Controls.Add(createButton);
             Controls.Add(deleteButton);

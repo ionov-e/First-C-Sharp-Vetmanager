@@ -30,7 +30,12 @@ namespace FirstCSharp.WindowsForm
             comboBoxUserList.SelectedItem = null;
         }
 
-        private async void comboBoxUserList_SelectionChangeCommitted(object sender, EventArgs e)
+        private void comboBoxUserList_SelectionChangeCommitted(object sender, EventArgs e)
+        {
+            updatePetTable();
+        }
+
+        public async void updatePetTable()
         {
             Pet[] pets = await _vetmanagerApiGateway.GetPetByClientId(GetClientIdOrThrow());
             this.petDataGridView.DataSource = pets;
@@ -45,7 +50,7 @@ namespace FirstCSharp.WindowsForm
             }
 
             PetType[] petTypes = await _vetmanagerApiGateway.GetAllPetTypes();
-            PetForm form = new(_vetmanagerApiGateway, GetClientIdOrThrow(), petTypes);
+            PetForm form = new(this, _vetmanagerApiGateway, GetClientIdOrThrow(), petTypes);
             form.Show();
         }
 
