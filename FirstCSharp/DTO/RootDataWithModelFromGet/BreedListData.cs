@@ -11,7 +11,7 @@ using System.Xml.Linq;
 
 namespace FirstCSharp.DTO.RootDataWithModel
 {
-    public class BreedListData : AbstractContainerWithModelsAndStringCount
+    internal class BreedListData : AbstractContainerWithModelsAndStringCount
     {
         [JsonPropertyName("breed")]
         public required Breed[] Models { get; set; }

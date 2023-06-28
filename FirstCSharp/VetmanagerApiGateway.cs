@@ -43,23 +43,23 @@ namespace FirstCSharp
 
         public async Task<Pet[]> GetPetByClientId(int id)
         {
-            var apiResponse = await GetModelsDataFromApi<PetListData>(new PathUri(Model.pet, new[] { new Filter("owner_id", id.ToString()) }));
+            var apiResponse = await GetModelsData<PetListData>(new PathUri(Model.pet, new[] { new Filter("owner_id", id.ToString()) }));
             return apiResponse.GetModels();
         }
 
-        public async Task<TModel> GetModel<TModel, TRootData>(Model model, int id)
+        private async Task<TModel> GetModel<TModel, TRootData>(Model model, int id)
             where TModel : AbstractModel
             where TRootData : AbstractContainerWithOneModelAndIntCount
         {
-            var apiResponse = await GetModelsDataFromApi<TRootData>(new PathUri(model, id));
+            var apiResponse = await GetModelsData<TRootData>(new PathUri(model, id));
             return (TModel)apiResponse.GetModel();
         }
 
-        public async Task<TModel[]> GetModels<TModel, TRootData>(Model model)
+        private async Task<TModel[]> GetModels<TModel, TRootData>(Model model)
             where TModel : AbstractModel
             where TRootData : AbstractContainerWithModelsAndStringCount
         {
-            var apiResponse = await GetModelsDataFromApi<TRootData>(new PathUri(model));
+            var apiResponse = await GetModelsData<TRootData>(new PathUri(model));
             var modelsFromApi = apiResponse.GetModels();
             TModel[] arrayOfModelsExplicitlyConverted = new TModel[modelsFromApi.Length];
 
@@ -71,7 +71,7 @@ namespace FirstCSharp
             return arrayOfModelsExplicitlyConverted;
         }
 
-        public async Task<TRootModelData> GetModelsDataFromApi<TRootModelData>(PathUri pathUri) where TRootModelData : ContainerInterface
+        private async Task<TRootModelData> GetModelsData<TRootModelData>(PathUri pathUri) where TRootModelData : ContainerInterface
         {
             string apiResponseAsJson = await httpClient.GetStringAsync(pathUri.ToString());
             var apiResponse = JsonSerializer.Deserialize<EnitreApiResponse<TRootModelData>>(apiResponseAsJson) ?? throw new Exception("Wrong API response from Get Request");

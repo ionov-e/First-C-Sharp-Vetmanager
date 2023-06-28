@@ -15,7 +15,7 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace FirstCSharp.WindowsForm
 {
-    public partial class UserList : Form
+    internal partial class UserList : Form
     {
         private readonly VetmanagerApiGateway _vetmanagerApiGateway;
         private readonly Client[] _clients;
@@ -26,6 +26,7 @@ namespace FirstCSharp.WindowsForm
             InitializeComponent();
             _vetmanagerApiGateway = vetmanagerApiGateway;
             _clients = clients;
+            _loadedPetsForSelectedClient = Array.Empty<Pet>();
             comboBoxUserList.DataSource = _clients;
             comboBoxUserList.DisplayMember = "FullName";
             comboBoxUserList.ValueMember = "Id";
@@ -34,17 +35,17 @@ namespace FirstCSharp.WindowsForm
             changeEditAndDeleteButtonStatesTo(false);
         }
 
+        public async void UpdatePetTable()
+        {
+            _loadedPetsForSelectedClient = await _vetmanagerApiGateway.GetPetByClientId(GetSelectedClientIdOrThrow());
+            petDataGridView.DataSource = _loadedPetsForSelectedClient;
+        }
+
         private void comboBoxUserList_SelectionChangeCommitted(object sender, EventArgs e)
         {
             UpdatePetTable();
             createButton.Enabled = IsClientSelected();
             changeEditAndDeleteButtonStatesTo(false);
-        }
-
-        public async void UpdatePetTable()
-        {
-            _loadedPetsForSelectedClient = await _vetmanagerApiGateway.GetPetByClientId(GetSelectedClientIdOrThrow());
-            this.petDataGridView.DataSource = _loadedPetsForSelectedClient;
         }
 
         private async void createButton_Click(object sender, EventArgs e)

@@ -3,14 +3,14 @@ using System.Windows.Forms;
 
 namespace FirstCSharp.WindowsForm
 {
-    public partial class LoginForm : Form
+    internal partial class LoginForm : Form
     {
         public LoginForm()
         {
             InitializeComponent();
         }
 
-        private async void loginButton_Click(object sender, EventArgs e)
+        private void loginButton_Click(object sender, EventArgs e)
         {
             string domainName = String.IsNullOrEmpty(textBoxDomainName.Text) ? "three" : textBoxDomainName.Text;
             string apiKey = String.IsNullOrEmpty(textBoxApiKey.Text) ? "87f81046a057ec76d9e2299113d24052" : textBoxApiKey.Text;
@@ -21,15 +21,14 @@ namespace FirstCSharp.WindowsForm
             } catch (Exception) { MessageBox.Show("Wasn't able to connect with provided domain ank key"); }
         }
 
-        private async void CreatePetListForm(VetmanagerApiGateway vetmanagerApiGateway)
+        private static async void CreatePetListForm(VetmanagerApiGateway vetmanagerApiGateway)
         {
             try
             {
                 Client[] response = await vetmanagerApiGateway.GetAllClients();
                 UserList form = new(vetmanagerApiGateway, response);
                 form.Show();
-            }
-            catch (Exception ex) { MessageBox.Show("Unexpected error has happened: " + ex.Message); }
+            } catch (Exception ex) { MessageBox.Show("Unexpected error has happened: " + ex.Message); }
         }
     }
 }

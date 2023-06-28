@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace FirstCSharp.DTO.RootDataWithModel.Model.Enum
 {
-    public enum PetGender
+    internal enum PetGender
     {
         male,
         female,

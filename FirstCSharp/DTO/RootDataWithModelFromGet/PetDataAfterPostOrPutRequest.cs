@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace FirstCSharp.DTO.RootDataWithModel
 {
-    public class PetDataAfterPostOrPutRequest : AbstractContainerWithModelAndIntCount
+    internal class PetDataAfterPostOrPutRequest : AbstractContainerWithModelAndIntCount
     {
         [JsonPropertyName("pet")]
         public required Pet[] Models { get; set; }

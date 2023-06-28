@@ -9,7 +9,7 @@ using static FirstCSharp.DTO.RootDataWithModel.Model.Client;
 
 namespace FirstCSharp.DTO
 {
-    public class EnitreApiResponse<T> where T : ContainerInterface
+    internal class EnitreApiResponse<T> where T : ContainerInterface
     {
         [JsonPropertyName("success")]
         public required bool IsSuccess { get; set; }

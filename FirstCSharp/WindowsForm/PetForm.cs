@@ -16,9 +16,9 @@ using static FirstCSharp.VetmanagerApiGateway.PathUri;
 
 namespace FirstCSharp.WindowsForm
 {
-    public partial class PetForm : Form
+    internal partial class PetForm : Form
     {
-        private UserList _userList;
+        private readonly UserList _userList;
         private readonly VetmanagerApiGateway _vetmanagerApiGateway;
         private readonly Pet? _petToEdit;
         private readonly PetType[] _petTypesWithBreeds;
