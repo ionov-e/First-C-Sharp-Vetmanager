@@ -1,17 +1,5 @@
-﻿using FirstCSharp.DTO.RootDataWithModel;
-using FirstCSharp.DTO.RootDataWithModel.Model;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Reflection.Metadata.Ecma335;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+﻿using FirstCSharp.DTO.RootDataWithModel.Model;
 using static FirstCSharp.VetmanagerApiGateway;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace FirstCSharp.WindowsForm
 {

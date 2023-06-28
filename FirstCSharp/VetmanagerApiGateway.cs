@@ -1,13 +1,9 @@
 ﻿using FirstCSharp.DTO;
 using FirstCSharp.DTO.RootDataWithModel;
 using FirstCSharp.DTO.RootDataWithModel.Model;
-using Newtonsoft.Json.Linq;
-using System.Collections.Generic;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json;
-using System.Xml.Linq;
-using static FirstCSharp.VetmanagerApiGateway;
 using static FirstCSharp.VetmanagerApiGateway.PathUri;
 
 namespace FirstCSharp

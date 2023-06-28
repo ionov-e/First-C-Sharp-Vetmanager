@@ -1,18 +1,8 @@
 ﻿using FirstCSharp.DTO.RootDataWithModel;
 using FirstCSharp.DTO.RootDataWithModel.Model;
 using FirstCSharp.DTO.RootDataWithModel.Model.Enum;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Dynamic;
 using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using static FirstCSharp.VetmanagerApiGateway.PathUri;
 
 namespace FirstCSharp.WindowsForm
 {
