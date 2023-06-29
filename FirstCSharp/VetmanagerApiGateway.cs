@@ -11,22 +11,43 @@ namespace FirstCSharp
     public class VetmanagerApiGateway
     {
         private readonly HttpClient httpClient;
-        private readonly string domainName;
-        private readonly string apiKey;
-        private readonly bool isProdServer;
+        public readonly string fullUrl;
+        public const string DefaultServiceName = "TestApplication";
 
-        public VetmanagerApiGateway(HttpClient httpClient, string domainName, string apiKey, bool isProdServer)
+        public VetmanagerApiGateway(HttpClient httpClient, string fullUrl, string apiKey)
+        {
+            this.fullUrl = fullUrl;
+            this.httpClient = httpClient;
+            httpClient.BaseAddress = new Uri(fullUrl);
+            httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            httpClient.DefaultRequestHeaders.Add("X-REST-API-KEY", apiKey);
+        }
+
+        public VetmanagerApiGateway(HttpClient httpClient, string fullUrl, string serviceName, string serviceKey)
         {
             this.httpClient = httpClient;
-            this.domainName = domainName;
-            this.apiKey = apiKey;
-            this.isProdServer = isProdServer;
+            this.fullUrl = fullUrl;
+            httpClient.BaseAddress = new Uri(fullUrl);
+            httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            httpClient.DefaultRequestHeaders.Add("X-SERVICE-NAME", serviceName);
+            httpClient.DefaultRequestHeaders.Add("X-SERVICE-REST-API-KEY", serviceKey);
+        }
 
-            httpClient.BaseAddress = new Uri($"https://{domainName}.test.kube-dev.vetmanager.cloud");
-            httpClient.DefaultRequestHeaders
-                  .Accept
-                  .Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            httpClient.DefaultRequestHeaders.Add("X-REST-API-KEY", apiKey);
+        public static async Task<string> GetApiKeyAsync(string fullUrl, string login, string password)
+        {
+            var httpClient = new HttpClient();
+
+            MultipartFormDataContent contentToSend = new()
+            {
+                { new StringContent(login), "login" },
+                { new StringContent(password), "password" },
+                { new StringContent(DefaultServiceName), "app_name" }
+            };
+
+            HttpResponseMessage httpResponseMessage = await httpClient.PostAsync(fullUrl + "/token_auth.php", contentToSend);
+            var jsonResponse = await httpResponseMessage.Content.ReadAsStringAsync();
+            var apiResponse = JsonSerializer.Deserialize<ApiResponseWithToken>(jsonResponse) ?? throw new Exception("Wrong API response while getting API token");
+            return apiResponse.Data.Token;
         }
 
         public async Task<Client[]> GetAllClients() { return await GetModels<Client, ClientListData>(Model.client); }
@@ -70,7 +91,7 @@ namespace FirstCSharp
         private async Task<TRootModelData> GetModelsData<TRootModelData>(PathUri pathUri) where TRootModelData : ContainerInterface
         {
             string apiResponseAsJson = await httpClient.GetStringAsync(pathUri.ToString());
-            var apiResponse = JsonSerializer.Deserialize<EnitreApiResponse<TRootModelData>>(apiResponseAsJson) ?? throw new Exception("Wrong API response from Get Request");
+            var apiResponse = JsonSerializer.Deserialize<ApiResponseWithModels<TRootModelData>>(apiResponseAsJson) ?? throw new Exception("Wrong API response from Get Request");
             return apiResponse.Data;
         }
 
@@ -80,7 +101,7 @@ namespace FirstCSharp
             string pathUriAsString = pathUri.ToString();
             HttpResponseMessage httpResponseMessage = await httpClient.PostAsync(pathUriAsString, jsonContent);
             var jsonResponse = await httpResponseMessage.Content.ReadAsStringAsync();
-            var apiResponse = JsonSerializer.Deserialize<EnitreApiResponse<TRootDataWithModels>>(jsonResponse) ?? throw new Exception("Wrong API response from Post Request");
+            var apiResponse = JsonSerializer.Deserialize<ApiResponseWithModels<TRootDataWithModels>>(jsonResponse) ?? throw new Exception("Wrong API response from Post Request");
             return apiResponse.Data;
         }
 
@@ -90,7 +111,7 @@ namespace FirstCSharp
             string pathUriAsString = pathUri.ToString();
             HttpResponseMessage httpResponseMessage = await httpClient.PutAsync(pathUriAsString, jsonContent);
             var jsonResponse = await httpResponseMessage.Content.ReadAsStringAsync();
-            var apiResponse = JsonSerializer.Deserialize<EnitreApiResponse<TRootDataWithModel>>(jsonResponse) ?? throw new Exception("Wrong API response from Put Request");
+            var apiResponse = JsonSerializer.Deserialize<ApiResponseWithModels<TRootDataWithModel>>(jsonResponse) ?? throw new Exception("Wrong API response from Put Request");
             return apiResponse.Data;
         }
 
@@ -105,7 +126,7 @@ namespace FirstCSharp
             string pathUriAsString = pathUri.ToString();
             HttpResponseMessage httpResponseMessage = await httpClient.DeleteAsync(pathUriAsString);
             var jsonResponse = await httpResponseMessage.Content.ReadAsStringAsync();
-            var apiResponse = JsonSerializer.Deserialize<EnitreApiResponse<RootDataFromDelete>>(jsonResponse) ?? throw new Exception("Wrong API response from Delete Request");
+            var apiResponse = JsonSerializer.Deserialize<ApiResponseWithModels<RootDataFromDelete>>(jsonResponse) ?? throw new Exception("Wrong API response from Delete Request");
             return apiResponse.Data.Id;
         }
 

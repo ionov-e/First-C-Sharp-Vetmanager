@@ -33,11 +33,13 @@
             labelDomainName = new Label();
             labelApiKey = new Label();
             textBoxApiKey = new TextBox();
+            differentLoginButton = new Button();
+            label1 = new Label();
             SuspendLayout();
             // 
             // loginButton
             // 
-            loginButton.Location = new Point(167, 172);
+            loginButton.Location = new Point(167, 170);
             loginButton.Margin = new Padding(3, 2, 3, 2);
             loginButton.Name = "loginButton";
             loginButton.Size = new Size(84, 22);
@@ -48,7 +50,7 @@
             // 
             // textBoxDomainName
             // 
-            textBoxDomainName.Location = new Point(30, 56);
+            textBoxDomainName.Location = new Point(30, 54);
             textBoxDomainName.Margin = new Padding(3, 2, 3, 2);
             textBoxDomainName.Name = "textBoxDomainName";
             textBoxDomainName.Size = new Size(221, 23);
@@ -57,7 +59,7 @@
             // labelDomainName
             // 
             labelDomainName.AutoSize = true;
-            labelDomainName.Location = new Point(30, 30);
+            labelDomainName.Location = new Point(30, 28);
             labelDomainName.Name = "labelDomainName";
             labelDomainName.Size = new Size(84, 15);
             labelDomainName.TabIndex = 2;
@@ -66,7 +68,7 @@
             // labelApiKey
             // 
             labelApiKey.AutoSize = true;
-            labelApiKey.Location = new Point(30, 96);
+            labelApiKey.Location = new Point(30, 94);
             labelApiKey.Name = "labelApiKey";
             labelApiKey.Size = new Size(47, 15);
             labelApiKey.TabIndex = 4;
@@ -74,17 +76,38 @@
             // 
             // textBoxApiKey
             // 
-            textBoxApiKey.Location = new Point(30, 122);
+            textBoxApiKey.Location = new Point(30, 120);
             textBoxApiKey.Margin = new Padding(3, 2, 3, 2);
             textBoxApiKey.Name = "textBoxApiKey";
             textBoxApiKey.Size = new Size(221, 23);
             textBoxApiKey.TabIndex = 3;
             // 
+            // differentLoginButton
+            // 
+            differentLoginButton.Location = new Point(30, 256);
+            differentLoginButton.Name = "differentLoginButton";
+            differentLoginButton.Size = new Size(221, 23);
+            differentLoginButton.TabIndex = 5;
+            differentLoginButton.Text = "Enter by providing User and Password";
+            differentLoginButton.UseVisualStyleBackColor = true;
+            differentLoginButton.Click += differentLoginButton_Click;
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Location = new Point(130, 237);
+            label1.Name = "label1";
+            label1.Size = new Size(18, 15);
+            label1.TabIndex = 6;
+            label1.Text = "or";
+            // 
             // LoginForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(283, 225);
+            ClientSize = new Size(283, 303);
+            Controls.Add(label1);
+            Controls.Add(differentLoginButton);
             Controls.Add(labelApiKey);
             Controls.Add(textBoxApiKey);
             Controls.Add(labelDomainName);
@@ -104,5 +127,7 @@
         private Label labelDomainName;
         private Label labelApiKey;
         private TextBox textBoxApiKey;
+        private Button differentLoginButton;
+        private Label label1;
     }
 }
