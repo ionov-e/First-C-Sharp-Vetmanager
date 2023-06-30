@@ -12,7 +12,6 @@ namespace FirstCSharp
     {
         private readonly HttpClient httpClient;
         public readonly string fullUrl;
-        public const string DefaultApiApplicationName = "TestApplication";
 
         public VetmanagerApiGateway(HttpClient httpClient, string fullUrl, string apiKey)
         {
@@ -33,7 +32,9 @@ namespace FirstCSharp
             httpClient.DefaultRequestHeaders.Add("X-USER-TOKEN", token);
         }
 
-        public static async Task<string> GetApiKeyAsync(string fullUrl, string login, string password)
+        public VetmanagerApiGateway(HttpClient httpClient, ApiTokenCredentials apiToken) : this(httpClient, apiToken.fullUrl, apiToken.appName, apiToken.token) { }
+
+        public static async Task<ApiTokenCredentials> GetApiTokenCredentials(string fullUrl, string login, string password, string appName)
         {
             var httpClient = new HttpClient();
 
@@ -41,13 +42,13 @@ namespace FirstCSharp
             {
                 { new StringContent(login), "login" },
                 { new StringContent(password), "password" },
-                { new StringContent(DefaultApiApplicationName), "app_name" }
+                { new StringContent(appName), "app_name" }
             };
 
             HttpResponseMessage httpResponseMessage = await httpClient.PostAsync(fullUrl + "/token_auth.php", contentToSend);
             var jsonResponse = await httpResponseMessage.Content.ReadAsStringAsync();
             var apiResponse = JsonSerializer.Deserialize<ApiResponseWithToken>(jsonResponse) ?? throw new Exception("Wrong API response while getting API token");
-            return apiResponse.Data.Token;
+            return new ApiTokenCredentials(fullUrl, apiResponse.Data.Token);
         }
 
         public async Task<Client[]> GetAllClients() { return await GetModels<Client, ClientListData>(Model.client); }
@@ -97,7 +98,7 @@ namespace FirstCSharp
 
         public async Task<TRootDataWithModels> CreateModel<TRootDataWithModels>(PathUri pathUri, object objectForSerialization) where TRootDataWithModels : AbstractContainerWithModelAndIntCount
         {
-            StringContent jsonContent = new(JsonSerializer.Serialize(objectForSerialization), Encoding.UTF8, "application/json" );
+            StringContent jsonContent = new(JsonSerializer.Serialize(objectForSerialization), Encoding.UTF8, "application/json");
             string pathUriAsString = pathUri.ToString();
             HttpResponseMessage httpResponseMessage = await httpClient.PostAsync(pathUriAsString, jsonContent);
             var jsonResponse = await httpResponseMessage.Content.ReadAsStringAsync();

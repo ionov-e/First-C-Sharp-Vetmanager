@@ -45,23 +45,27 @@ namespace FirstCSharp.WindowsForm
             this.Text = "Update Pet";
             aliasTextBox.Text = _petToEdit.alias;
 
-            if (_petToEdit.type_id  != null)
+            if (_petToEdit.type_id != null)
             {
                 typeComboBox.SelectedItem = GetPetTypeByIdFromList(Int32.Parse(_petToEdit.type_id));
                 FillBreedsIntoComboxUsingSelectedPetType();
 
-                if (_petToEdit.breed_id != null) { breedComboBox.SelectedItem = GetBreedByIdFromList(Int32.Parse(_petToEdit.breed_id));
-                } else { breedComboBox.SelectedItem = null; }
+                if (_petToEdit.breed_id != null)
+                {
+                    breedComboBox.SelectedItem = GetBreedByIdFromList(Int32.Parse(_petToEdit.breed_id));
+                }
+                else { breedComboBox.SelectedItem = null; }
             }
 
-            if (_petToEdit.sex != null) {genderComboBox.SelectedItem = (PetGender)Enum.Parse(typeof(PetGender), _petToEdit.sex); }
+            if (_petToEdit.sex != null) { genderComboBox.SelectedItem = (PetGender)Enum.Parse(typeof(PetGender), _petToEdit.sex); }
             if (_petToEdit.birthday != null) { birthdayDateTimePicker.Value = DateTime.ParseExact(_petToEdit.birthday, "yyyy-MM-dd", new CultureInfo("ru-RU")); }
         }
 
         private PetType GetPetTypeByIdFromList(int petTypeId)
-        { 
-            foreach (PetType petType in _petTypesWithBreeds) {
-                if (petType.Id == petTypeId) {  return petType; }
+        {
+            foreach (PetType petType in _petTypesWithBreeds)
+            {
+                if (petType.Id == petTypeId) { return petType; }
             }
             throw new Exception("Failed to find PetType by Id in list");
         }
@@ -89,14 +93,14 @@ namespace FirstCSharp.WindowsForm
             try
             {
                 if (_petToEdit == null) { PetDataAfterPostOrPutRequest petRootData = await _vetmanagerApiGateway.CreateModel<PetDataAfterPostOrPutRequest>(new VetmanagerApiGateway.PathUri(VetmanagerApiGateway.Model.pet), petObjectToSend); }
-                else { PetData petRootData = await _vetmanagerApiGateway.UpdateModel<PetData>(new VetmanagerApiGateway.PathUri(VetmanagerApiGateway.Model.pet, _petToEdit.Id), petObjectToSend);}
-                
+                else { PetData petRootData = await _vetmanagerApiGateway.UpdateModel<PetData>(new VetmanagerApiGateway.PathUri(VetmanagerApiGateway.Model.pet, _petToEdit.Id), petObjectToSend); }
+
                 _userList.UpdatePetTable();
                 this.Close();
             }
             catch (Exception ex) { MessageBox.Show("Exception message: " + ex.Message); }
         }
-         
+
         private void typeComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             FillBreedsIntoComboxUsingSelectedPetType();

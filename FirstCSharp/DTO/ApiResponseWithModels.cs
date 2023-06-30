@@ -1,5 +1,5 @@
-﻿using System.Text.Json.Serialization;
-using FirstCSharp.DTO.RootDataWithModel;
+﻿using FirstCSharp.DTO.RootDataWithModel;
+using System.Text.Json.Serialization;
 
 namespace FirstCSharp.DTO
 {

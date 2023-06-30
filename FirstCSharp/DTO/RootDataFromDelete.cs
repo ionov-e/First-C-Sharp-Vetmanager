@@ -3,7 +3,7 @@ using System.Text.Json.Serialization;
 
 namespace FirstCSharp.DTO
 {
-    internal class RootDataFromDelete: ContainerInterface
+    internal class RootDataFromDelete : ContainerInterface
     {
         public required string id { get; set; }
         [JsonIgnore]
