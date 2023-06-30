@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             loginButton = new Button();
-            textBoxDomainName = new TextBox();
-            labelDomainName = new Label();
+            textBoxFullUrl = new TextBox();
+            fullUrlName = new Label();
             labelApiKey = new Label();
             textBoxApiKey = new TextBox();
             differentLoginButton = new Button();
@@ -48,22 +48,22 @@
             loginButton.UseVisualStyleBackColor = true;
             loginButton.Click += loginButton_Click;
             // 
-            // textBoxDomainName
+            // textBoxFullUrl
             // 
-            textBoxDomainName.Location = new Point(30, 54);
-            textBoxDomainName.Margin = new Padding(3, 2, 3, 2);
-            textBoxDomainName.Name = "textBoxDomainName";
-            textBoxDomainName.Size = new Size(221, 23);
-            textBoxDomainName.TabIndex = 1;
+            textBoxFullUrl.Location = new Point(30, 54);
+            textBoxFullUrl.Margin = new Padding(3, 2, 3, 2);
+            textBoxFullUrl.Name = "textBoxFullUrl";
+            textBoxFullUrl.Size = new Size(221, 23);
+            textBoxFullUrl.TabIndex = 1;
             // 
-            // labelDomainName
+            // fullUrlName
             // 
-            labelDomainName.AutoSize = true;
-            labelDomainName.Location = new Point(30, 28);
-            labelDomainName.Name = "labelDomainName";
-            labelDomainName.Size = new Size(84, 15);
-            labelDomainName.TabIndex = 2;
-            labelDomainName.Text = "Domain Name";
+            fullUrlName.AutoSize = true;
+            fullUrlName.Location = new Point(30, 28);
+            fullUrlName.Name = "fullUrlName";
+            fullUrlName.Size = new Size(44, 15);
+            fullUrlName.TabIndex = 2;
+            fullUrlName.Text = "Full Url";
             // 
             // labelApiKey
             // 
@@ -110,8 +110,8 @@
             Controls.Add(differentLoginButton);
             Controls.Add(labelApiKey);
             Controls.Add(textBoxApiKey);
-            Controls.Add(labelDomainName);
-            Controls.Add(textBoxDomainName);
+            Controls.Add(fullUrlName);
+            Controls.Add(textBoxFullUrl);
             Controls.Add(loginButton);
             Margin = new Padding(3, 2, 3, 2);
             Name = "LoginForm";
@@ -123,8 +123,8 @@
         #endregion
 
         private Button loginButton;
-        private TextBox textBoxDomainName;
-        private Label labelDomainName;
+        private TextBox textBoxFullUrl;
+        private Label fullUrlName;
         private Label labelApiKey;
         private TextBox textBoxApiKey;
         private Button differentLoginButton;

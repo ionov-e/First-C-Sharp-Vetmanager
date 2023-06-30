@@ -28,23 +28,23 @@
         /// </summary>
         private void InitializeComponent()
         {
-            domainLabel = new Label();
+            fullUrlLabel = new Label();
             loginLabel = new Label();
             passwordLabel = new Label();
-            domainNameTextBox = new TextBox();
+            fullUrlTextBox = new TextBox();
             loginNameTextBox = new TextBox();
             passwordTextBox = new TextBox();
             loginButton = new Button();
             SuspendLayout();
             // 
-            // domainLabel
+            // fullUrlLabel
             // 
-            domainLabel.AutoSize = true;
-            domainLabel.Location = new Point(37, 31);
-            domainLabel.Name = "domainLabel";
-            domainLabel.Size = new Size(82, 15);
-            domainLabel.TabIndex = 0;
-            domainLabel.Text = "Domain name";
+            fullUrlLabel.AutoSize = true;
+            fullUrlLabel.Location = new Point(37, 31);
+            fullUrlLabel.Name = "fullUrlLabel";
+            fullUrlLabel.Size = new Size(44, 15);
+            fullUrlLabel.TabIndex = 0;
+            fullUrlLabel.Text = "Full Url";
             // 
             // loginLabel
             // 
@@ -64,12 +64,12 @@
             passwordLabel.TabIndex = 2;
             passwordLabel.Text = "Password";
             // 
-            // domainNameTextBox
+            // fullUrlTextBox
             // 
-            domainNameTextBox.Location = new Point(37, 61);
-            domainNameTextBox.Name = "domainNameTextBox";
-            domainNameTextBox.Size = new Size(212, 23);
-            domainNameTextBox.TabIndex = 3;
+            fullUrlTextBox.Location = new Point(37, 61);
+            fullUrlTextBox.Name = "fullUrlTextBox";
+            fullUrlTextBox.Size = new Size(212, 23);
+            fullUrlTextBox.TabIndex = 3;
             // 
             // loginNameTextBox
             // 
@@ -103,10 +103,10 @@
             Controls.Add(loginButton);
             Controls.Add(passwordTextBox);
             Controls.Add(loginNameTextBox);
-            Controls.Add(domainNameTextBox);
+            Controls.Add(fullUrlTextBox);
             Controls.Add(passwordLabel);
             Controls.Add(loginLabel);
-            Controls.Add(domainLabel);
+            Controls.Add(fullUrlLabel);
             Name = "LoginByUserAndPasswordForm";
             Text = "Login By User And Password";
             ResumeLayout(false);
@@ -115,10 +115,10 @@
 
         #endregion
 
-        private Label domainLabel;
+        private Label fullUrlLabel;
         private Label loginLabel;
         private Label passwordLabel;
-        private TextBox domainNameTextBox;
+        private TextBox fullUrlTextBox;
         private TextBox loginNameTextBox;
         private TextBox passwordTextBox;
         private Button loginButton;

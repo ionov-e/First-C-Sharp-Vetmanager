@@ -11,7 +11,7 @@
         {
             try
             {
-                string fullUrl = String.IsNullOrEmpty(domainNameTextBox.Text) ? throw new Exception("No domain provided") : domainNameTextBox.Text;
+                string fullUrl = String.IsNullOrEmpty(fullUrlTextBox.Text) ? throw new Exception("No url provided") : fullUrlTextBox.Text;
                 string login = String.IsNullOrEmpty(loginNameTextBox.Text) ? throw new Exception("No login provided") : loginNameTextBox.Text;
                 string password = String.IsNullOrEmpty(passwordTextBox.Text) ? throw new Exception("No password provided") : passwordTextBox.Text;
                 ApiTokenCredentials credentials = await VetmanagerApiGateway.GetApiTokenCredentials(fullUrl, login, password, ApiTokenCredentials.DefaultApiApplicationName);
