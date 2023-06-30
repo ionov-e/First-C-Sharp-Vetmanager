@@ -26,9 +26,9 @@ namespace FirstCSharp.WindowsForm
         {
             try
             {
-                string domainName = String.IsNullOrEmpty(textBoxDomainName.Text) ? "three" : textBoxDomainName.Text;
+                string fullUrl = String.IsNullOrEmpty(textBoxDomainName.Text) ? "https://three.test.kube-dev.vetmanager.cloud/" : textBoxDomainName.Text;
                 string apiKey = String.IsNullOrEmpty(textBoxApiKey.Text) ? "87f81046a057ec76d9e2299113d24052" : textBoxApiKey.Text;
-                VetmanagerApiGateway vetmanagerGateway = ApiGateway(domainName, apiKey);
+                VetmanagerApiGateway vetmanagerGateway = ApiGateway(fullUrl, apiKey);
                 CreatePetListForm(vetmanagerGateway);
             } catch (Exception ex) { MessageBox.Show(ex.Message); }
         }

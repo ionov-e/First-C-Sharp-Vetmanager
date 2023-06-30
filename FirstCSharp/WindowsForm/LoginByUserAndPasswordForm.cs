@@ -24,18 +24,18 @@ namespace FirstCSharp.WindowsForm
         {
             try
             {
-                string domainName = String.IsNullOrEmpty(domainNameTextBox.Text) ? throw new Exception("No domain provided") : domainNameTextBox.Text;
+                string fullUrl = String.IsNullOrEmpty(domainNameTextBox.Text) ? throw new Exception("No domain provided") : domainNameTextBox.Text;
                 string login = String.IsNullOrEmpty(loginNameTextBox.Text) ? throw new Exception("No login provided") : loginNameTextBox.Text;
                 string password = String.IsNullOrEmpty(passwordTextBox.Text) ? throw new Exception("No password provided") : passwordTextBox.Text;
-                string apiKey = await VetmanagerApiGateway.GetApiKeyAsync(domainName, login, password);
-                VetmanagerApiGateway vetmanagerGateway = ApiGateway(domainName, apiKey);
+                string apiServiceKey = await VetmanagerApiGateway.GetApiKeyAsync(fullUrl, login, password);
+                VetmanagerApiGateway vetmanagerGateway = ApiGateway(fullUrl, apiServiceKey);
                 LoginForm.CreatePetListForm(vetmanagerGateway);
             } catch (Exception ex) { MessageBox.Show("Failed at authorization: " + ex.Message); }
         }
 
-        private VetmanagerApiGateway ApiGateway(string domainName, string apiKey)
+        private VetmanagerApiGateway ApiGateway(string fullUrl, string apiServiceKey)
         {
-            try { return new VetmanagerApiGateway(new HttpClient(), domainName, VetmanagerApiGateway.DefaultServiceName, apiKey); }
+            try { return new VetmanagerApiGateway(new HttpClient(), fullUrl, VetmanagerApiGateway.DefaultApiServiceName, apiServiceKey); }
             catch (Exception) { throw new Exception("Wasn't able to connect with provided domain ank key"); }
         }
     }

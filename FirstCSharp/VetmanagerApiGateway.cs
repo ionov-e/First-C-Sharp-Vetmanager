@@ -12,7 +12,7 @@ namespace FirstCSharp
     {
         private readonly HttpClient httpClient;
         public readonly string fullUrl;
-        public const string DefaultServiceName = "TestApplication";
+        public const string DefaultApiServiceName = "TestApplication";
 
         public VetmanagerApiGateway(HttpClient httpClient, string fullUrl, string apiKey)
         {
@@ -41,7 +41,7 @@ namespace FirstCSharp
             {
                 { new StringContent(login), "login" },
                 { new StringContent(password), "password" },
-                { new StringContent(DefaultServiceName), "app_name" }
+                { new StringContent(DefaultApiServiceName), "app_name" }
             };
 
             HttpResponseMessage httpResponseMessage = await httpClient.PostAsync(fullUrl + "/token_auth.php", contentToSend);
