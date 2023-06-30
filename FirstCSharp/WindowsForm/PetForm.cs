@@ -41,6 +41,8 @@ namespace FirstCSharp.WindowsForm
         {
             if (_petToEdit == null) { return; }
 
+            saveButton.Text = "Update Form";
+            this.Text = "Update Pet";
             aliasTextBox.Text = _petToEdit.alias;
 
             if (_petToEdit.type_id  != null)
