@@ -33,9 +33,9 @@ namespace FirstCSharp.WindowsForm
             } catch (Exception ex) { MessageBox.Show("Failed at authorization: " + ex.Message); }
         }
 
-        private VetmanagerApiGateway ApiGateway(string fullUrl, string apiServiceKey)
+        private VetmanagerApiGateway ApiGateway(string fullUrl, string apiToken)
         {
-            try { return new VetmanagerApiGateway(new HttpClient(), fullUrl, VetmanagerApiGateway.DefaultApiServiceName, apiServiceKey); }
+            try { return new VetmanagerApiGateway(new HttpClient(), fullUrl, VetmanagerApiGateway.DefaultApiApplicationName, apiToken); }
             catch (Exception) { throw new Exception("Wasn't able to connect with provided domain ank key"); }
         }
     }

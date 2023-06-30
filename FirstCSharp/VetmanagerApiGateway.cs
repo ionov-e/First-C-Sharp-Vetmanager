@@ -12,7 +12,7 @@ namespace FirstCSharp
     {
         private readonly HttpClient httpClient;
         public readonly string fullUrl;
-        public const string DefaultApiServiceName = "TestApplication";
+        public const string DefaultApiApplicationName = "TestApplication";
 
         public VetmanagerApiGateway(HttpClient httpClient, string fullUrl, string apiKey)
         {
@@ -23,14 +23,14 @@ namespace FirstCSharp
             httpClient.DefaultRequestHeaders.Add("X-REST-API-KEY", apiKey);
         }
 
-        public VetmanagerApiGateway(HttpClient httpClient, string fullUrl, string serviceName, string serviceKey)
+        public VetmanagerApiGateway(HttpClient httpClient, string fullUrl, string applicationName, string token)
         {
             this.httpClient = httpClient;
             this.fullUrl = fullUrl;
             httpClient.BaseAddress = new Uri(fullUrl);
             httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            httpClient.DefaultRequestHeaders.Add("X-SERVICE-NAME", serviceName);
-            httpClient.DefaultRequestHeaders.Add("X-SERVICE-REST-API-KEY", serviceKey);
+            httpClient.DefaultRequestHeaders.Add("X-APP-NAME", applicationName);
+            httpClient.DefaultRequestHeaders.Add("X-USER-TOKEN", token);
         }
 
         public static async Task<string> GetApiKeyAsync(string fullUrl, string login, string password)
@@ -41,7 +41,7 @@ namespace FirstCSharp
             {
                 { new StringContent(login), "login" },
                 { new StringContent(password), "password" },
-                { new StringContent(DefaultApiServiceName), "app_name" }
+                { new StringContent(DefaultApiApplicationName), "app_name" }
             };
 
             HttpResponseMessage httpResponseMessage = await httpClient.PostAsync(fullUrl + "/token_auth.php", contentToSend);
