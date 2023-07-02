@@ -82,19 +82,19 @@ namespace FirstCSharp.VetmanagerApiGateway
             return apiResponse.GetModels();
         }
 
-        private async Task<TModel> GetModel<TModel, TRootData>(AccessibleModel model, int id)
+        private async Task<TModel> GetModel<TModel, TContainerWithOneModel>(AccessibleModel model, int id)
             where TModel : AbstractModel
-            where TRootData : AbstractContainerWithOneModelAndIntCount
+            where TContainerWithOneModel : AbstractContainerWithOneModelAndIntCount
         {
-            var apiResponse = await GetModelsData<TRootData>(new PathUri.PathUri(model, id));
+            var apiResponse = await GetModelsData<TContainerWithOneModel>(new PathUri.PathUri(model, id));
             return (TModel)apiResponse.GetModel();
         }
 
-        private async Task<TModel[]> GetModels<TModel, TRootData>(AccessibleModel model)
+        private async Task<TModel[]> GetModels<TModel, TContainerWithModels>(AccessibleModel model)
             where TModel : AbstractModel
-            where TRootData : AbstractContainerWithModelsAndStringCount
+            where TContainerWithModels : AbstractContainerWithModelsAndStringCount
         {
-            var apiResponse = await GetModelsData<TRootData>(new PathUri.PathUri(model));
+            var apiResponse = await GetModelsData<TContainerWithModels>(new PathUri.PathUri(model));
             var modelsFromApi = apiResponse.GetModels();
             TModel[] arrayOfModelsExplicitlyConverted = new TModel[modelsFromApi.Length];
 
@@ -106,30 +106,30 @@ namespace FirstCSharp.VetmanagerApiGateway
             return arrayOfModelsExplicitlyConverted;
         }
 
-        private async Task<TRootModelData> GetModelsData<TRootModelData>(PathUri.PathUri pathUri) where TRootModelData : ModelContainerInterface
+        private async Task<TModelContainer> GetModelsData<TModelContainer>(PathUri.PathUri pathUri) where TModelContainer : ModelContainerInterface
         {
             string apiResponseAsJson = await httpClient.GetStringAsync(pathUri.ToString());
-            var apiResponse = JsonSerializer.Deserialize<ApiResponseWithModelContainer<TRootModelData>>(apiResponseAsJson) ?? throw new Exception("Wrong API response from Get Request");
+            var apiResponse = JsonSerializer.Deserialize<ApiResponseWithModelContainer<TModelContainer>>(apiResponseAsJson) ?? throw new Exception("Wrong API response from Get Request");
             return apiResponse.Data;
         }
 
-        public async Task<TRootDataWithModels> CreateModel<TRootDataWithModels>(PathUri.PathUri pathUri, object objectForSerialization) where TRootDataWithModels : AbstractContainerWithOneModelAndIntCount
+        public async Task<TContainerWithOneModel> CreateModel<TContainerWithOneModel>(PathUri.PathUri pathUri, object objectForSerialization) where TContainerWithOneModel : AbstractContainerWithOneModelAndIntCount
         {
             StringContent jsonContent = new(JsonSerializer.Serialize(objectForSerialization), Encoding.UTF8, "application/json");
             string pathUriAsString = pathUri.ToString();
             HttpResponseMessage httpResponseMessage = await httpClient.PostAsync(pathUriAsString, jsonContent);
             var jsonResponse = await httpResponseMessage.Content.ReadAsStringAsync();
-            var apiResponse = JsonSerializer.Deserialize<ApiResponseWithModelContainer<TRootDataWithModels>>(jsonResponse) ?? throw new Exception("Wrong API response from Post Request");
+            var apiResponse = JsonSerializer.Deserialize<ApiResponseWithModelContainer<TContainerWithOneModel>>(jsonResponse) ?? throw new Exception("Wrong API response from Post Request");
             return apiResponse.Data;
         }
 
-        public async Task<TContainerWithOneModelAndIntCount> UpdateModel<TContainerWithOneModelAndIntCount>(PathUri.PathUri pathUri, object objectForSerialization) where TContainerWithOneModelAndIntCount : AbstractContainerWithOneModelAndIntCount
+        public async Task<TContainerWithOneModel> UpdateModel<TContainerWithOneModel>(PathUri.PathUri pathUri, object objectForSerialization) where TContainerWithOneModel : AbstractContainerWithOneModelAndIntCount
         {
             StringContent jsonContent = new(JsonSerializer.Serialize(objectForSerialization), Encoding.UTF8, "application/json");
             string pathUriAsString = pathUri.ToString();
             HttpResponseMessage httpResponseMessage = await httpClient.PutAsync(pathUriAsString, jsonContent);
             var jsonResponse = await httpResponseMessage.Content.ReadAsStringAsync();
-            var apiResponse = JsonSerializer.Deserialize<ApiResponseWithModelContainer<TContainerWithOneModelAndIntCount>>(jsonResponse) ?? throw new Exception("Wrong API response from Put Request");
+            var apiResponse = JsonSerializer.Deserialize<ApiResponseWithModelContainer<TContainerWithOneModel>>(jsonResponse) ?? throw new Exception("Wrong API response from Put Request");
             return apiResponse.Data;
         }
 
