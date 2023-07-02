@@ -1,5 +1,6 @@
 ﻿using FirstCSharp.VetmanagerApiGateway;
 using FirstCSharp.VetmanagerApiGateway.DTO.ModelContainer.Model;
+using FirstCSharp.VetmanagerApiGateway.PathUri;
 using static FirstCSharp.VetmanagerApiGateway.ApiGateway;
 
 namespace FirstCSharp.WindowsForm
@@ -76,7 +77,7 @@ namespace FirstCSharp.WindowsForm
             int selectedPetId = GetPetIdOrThrow();
             try
             {
-                int deletedPetId = await _vetmanagerApiGateway.DeleteModelFromApi(new PathUri(Model.pet, selectedPetId));
+                int deletedPetId = await _vetmanagerApiGateway.DeleteModelFromApi(new PathUri(AccessibleModel.pet, selectedPetId));
                 if (deletedPetId != selectedPetId) { throw new Exception($"Somehow Deleted Pet Id ({deletedPetId}) is different from intended one ({selectedPetId})"); }
                 UpdatePetTable();
             }

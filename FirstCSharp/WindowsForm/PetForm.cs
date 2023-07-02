@@ -2,6 +2,7 @@
 using FirstCSharp.VetmanagerApiGateway.DTO.ModelContainer;
 using FirstCSharp.VetmanagerApiGateway.DTO.ModelContainer.Model;
 using FirstCSharp.VetmanagerApiGateway.DTO.ModelContainer.Model.Enum;
+using FirstCSharp.VetmanagerApiGateway.PathUri;
 using System.Dynamic;
 using System.Globalization;
 
@@ -93,8 +94,8 @@ namespace FirstCSharp.WindowsForm
 
             try
             {
-                if (_petToEdit == null) { PetDataAfterPostOrPutRequest petRootData = await _vetmanagerApiGateway.CreateModel<PetDataAfterPostOrPutRequest>(new PathUri(ApiGateway.Model.pet), petObjectToSend); }
-                else { PetData petRootData = await _vetmanagerApiGateway.UpdateModel<PetData>(new PathUri(ApiGateway.Model.pet, _petToEdit.Id), petObjectToSend); }
+                if (_petToEdit == null) { PetDataAfterPostOrPutRequest petRootData = await _vetmanagerApiGateway.CreateModel<PetDataAfterPostOrPutRequest>(new PathUri(AccessibleModel.pet), petObjectToSend); }
+                else { PetData petRootData = await _vetmanagerApiGateway.UpdateModel<PetData>(new PathUri(AccessibleModel.pet, _petToEdit.Id), petObjectToSend); }
 
                 _userList.UpdatePetTable();
                 this.Close();

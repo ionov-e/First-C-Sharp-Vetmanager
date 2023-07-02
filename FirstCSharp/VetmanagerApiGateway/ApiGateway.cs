@@ -1,6 +1,7 @@
 ﻿using FirstCSharp.VetmanagerApiGateway.DTO;
 using FirstCSharp.VetmanagerApiGateway.DTO.ModelContainer;
 using FirstCSharp.VetmanagerApiGateway.DTO.ModelContainer.Model;
+using FirstCSharp.VetmanagerApiGateway.PathUri;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json;
@@ -67,33 +68,33 @@ namespace FirstCSharp.VetmanagerApiGateway
             return new ApiTokenCredentials(fullUrl, apiResponse.Data.Token);
         }
 
-        public async Task<Client[]> GetAllClients() { return await GetModels<Client, ClientListData>(Model.client); }
+        public async Task<Client[]> GetAllClients() { return await GetModels<Client, ClientListData>(AccessibleModel.client); }
 
-        public async Task<Breed[]> GetAllBreeds() { return await GetModels<Breed, BreedListData>(Model.breed); }
+        public async Task<Breed[]> GetAllBreeds() { return await GetModels<Breed, BreedListData>(AccessibleModel.breed); }
 
-        public async Task<PetType[]> GetAllPetTypes() { return await GetModels<PetType, PetTypeListData>(Model.petType); }
+        public async Task<PetType[]> GetAllPetTypes() { return await GetModels<PetType, PetTypeListData>(AccessibleModel.petType); }
 
-        public async Task<Client> GetClient(int id) { return await GetModel<Client, ClientData>(Model.client, id); }
+        public async Task<Client> GetClient(int id) { return await GetModel<Client, ClientData>(AccessibleModel.client, id); }
 
         public async Task<Pet[]> GetPetByClientId(int id)
         {
-            var apiResponse = await GetModelsData<PetListData>(new PathUri(Model.pet, new[] { new PathUri.Filter("owner_id", id.ToString()) }));
+            var apiResponse = await GetModelsData<PetListData>(new PathUri.PathUri(AccessibleModel.pet, new[] { new Filter("owner_id", id.ToString()) }));
             return apiResponse.GetModels();
         }
 
-        private async Task<TModel> GetModel<TModel, TRootData>(Model model, int id)
+        private async Task<TModel> GetModel<TModel, TRootData>(AccessibleModel model, int id)
             where TModel : AbstractModel
             where TRootData : AbstractContainerWithOneModelAndIntCount
         {
-            var apiResponse = await GetModelsData<TRootData>(new PathUri(model, id));
+            var apiResponse = await GetModelsData<TRootData>(new PathUri.PathUri(model, id));
             return (TModel)apiResponse.GetModel();
         }
 
-        private async Task<TModel[]> GetModels<TModel, TRootData>(Model model)
+        private async Task<TModel[]> GetModels<TModel, TRootData>(AccessibleModel model)
             where TModel : AbstractModel
             where TRootData : AbstractContainerWithModelsAndStringCount
         {
-            var apiResponse = await GetModelsData<TRootData>(new PathUri(model));
+            var apiResponse = await GetModelsData<TRootData>(new PathUri.PathUri(model));
             var modelsFromApi = apiResponse.GetModels();
             TModel[] arrayOfModelsExplicitlyConverted = new TModel[modelsFromApi.Length];
 
@@ -105,14 +106,14 @@ namespace FirstCSharp.VetmanagerApiGateway
             return arrayOfModelsExplicitlyConverted;
         }
 
-        private async Task<TRootModelData> GetModelsData<TRootModelData>(PathUri pathUri) where TRootModelData : ModelContainerInterface
+        private async Task<TRootModelData> GetModelsData<TRootModelData>(PathUri.PathUri pathUri) where TRootModelData : ModelContainerInterface
         {
             string apiResponseAsJson = await httpClient.GetStringAsync(pathUri.ToString());
             var apiResponse = JsonSerializer.Deserialize<ApiResponseWithModelContainer<TRootModelData>>(apiResponseAsJson) ?? throw new Exception("Wrong API response from Get Request");
             return apiResponse.Data;
         }
 
-        public async Task<TRootDataWithModels> CreateModel<TRootDataWithModels>(PathUri pathUri, object objectForSerialization) where TRootDataWithModels : AbstractContainerWithOneModelAndIntCount
+        public async Task<TRootDataWithModels> CreateModel<TRootDataWithModels>(PathUri.PathUri pathUri, object objectForSerialization) where TRootDataWithModels : AbstractContainerWithOneModelAndIntCount
         {
             StringContent jsonContent = new(JsonSerializer.Serialize(objectForSerialization), Encoding.UTF8, "application/json");
             string pathUriAsString = pathUri.ToString();
@@ -122,7 +123,7 @@ namespace FirstCSharp.VetmanagerApiGateway
             return apiResponse.Data;
         }
 
-        public async Task<TContainerWithOneModelAndIntCount> UpdateModel<TContainerWithOneModelAndIntCount>(PathUri pathUri, object objectForSerialization) where TContainerWithOneModelAndIntCount : AbstractContainerWithOneModelAndIntCount
+        public async Task<TContainerWithOneModelAndIntCount> UpdateModel<TContainerWithOneModelAndIntCount>(PathUri.PathUri pathUri, object objectForSerialization) where TContainerWithOneModelAndIntCount : AbstractContainerWithOneModelAndIntCount
         {
             StringContent jsonContent = new(JsonSerializer.Serialize(objectForSerialization), Encoding.UTF8, "application/json");
             string pathUriAsString = pathUri.ToString();
@@ -138,21 +139,13 @@ namespace FirstCSharp.VetmanagerApiGateway
         /// <param name="pathUri"></param>
         /// <returns></returns>
         /// <exception cref="Exception"></exception>
-        public async Task<int> DeleteModelFromApi(PathUri pathUri)
+        public async Task<int> DeleteModelFromApi(PathUri.PathUri pathUri)
         {
             string pathUriAsString = pathUri.ToString();
             HttpResponseMessage httpResponseMessage = await httpClient.DeleteAsync(pathUriAsString);
             var jsonResponse = await httpResponseMessage.Content.ReadAsStringAsync();
             var apiResponse = JsonSerializer.Deserialize<ApiResponseWithModelContainer<IdOnly>>(jsonResponse) ?? throw new Exception("Wrong API response from Delete Request");
             return apiResponse.Data.Id;
-        }
-
-        public enum Model
-        {
-            breed,
-            client,
-            pet,
-            petType
         }
     }
 }
