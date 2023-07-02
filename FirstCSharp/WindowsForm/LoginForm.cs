@@ -1,4 +1,5 @@
-using FirstCSharp.DTO.RootDataWithModel.Model;
+using FirstCSharp.VetmanagerApiGateway;
+using FirstCSharp.VetmanagerApiGateway.DTO.ModelContainer.Model;
 
 namespace FirstCSharp.WindowsForm
 {
@@ -14,15 +15,15 @@ namespace FirstCSharp.WindowsForm
         {
             try
             {
-                var credentials = ApiTokenCredentials.FromSaved();
+                ApiTokenCredentials credentials = ApiTokenCredentialsExtension.FromSaved();
                 if (credentials == null) { return; }
-                VetmanagerApiGateway vetmanagerGateway = new VetmanagerApiGateway(new HttpClient(), credentials);
+                ApiGateway vetmanagerGateway = new ApiGateway(new HttpClient(), credentials);
                 CreatePetListForm(vetmanagerGateway);
             }
             catch (Exception) { };
         }
 
-        public static async void CreatePetListForm(VetmanagerApiGateway vetmanagerApiGateway)
+        public static async void CreatePetListForm(ApiGateway vetmanagerApiGateway)
         {
             try
             {
@@ -44,14 +45,14 @@ namespace FirstCSharp.WindowsForm
             {
                 string fullUrl = String.IsNullOrEmpty(textBoxFullUrl.Text) ? throw new Exception("Full url field is empty") : textBoxFullUrl.Text;
                 string apiKey = String.IsNullOrEmpty(textBoxApiKey.Text) ? throw new Exception("API Key field is empty") : textBoxApiKey.Text;
-                VetmanagerApiGateway vetmanagerGateway = ApiGateway(fullUrl, apiKey);
+                ApiGateway vetmanagerGateway = ApiGateway(fullUrl, apiKey);
                 CreatePetListForm(vetmanagerGateway);
             }
             catch (Exception ex) { MessageBox.Show(ex.Message); }
         }
-        private VetmanagerApiGateway ApiGateway(string domainName, string apiKey)
+        private ApiGateway ApiGateway(string domainName, string apiKey)
         {
-            try { return new VetmanagerApiGateway(new HttpClient(), domainName, apiKey); }
+            try { return new ApiGateway(new HttpClient(), domainName, apiKey); }
             catch (Exception) { throw new Exception("Wasn't able to connect with provided domain ank key"); }
         }
     }

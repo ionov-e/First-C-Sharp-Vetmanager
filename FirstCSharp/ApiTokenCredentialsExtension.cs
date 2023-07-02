@@ -1,32 +1,18 @@
-﻿using System.Text;
+﻿using FirstCSharp.VetmanagerApiGateway;
+using System.Text;
 using System.Xml;
 
 namespace FirstCSharp
 {
-    public class ApiTokenCredentials
+    public static class ApiTokenCredentialsExtension
     {
-        public const string DefaultApiApplicationName = "TestApplication";
-
         private const string FileName = "last_settings.xml";
         private const string KeyRootTag = "connection";
         private const string KeyFullUrl = "fullUrl";
         private const string KeyToken = "token";
         private const string KeyAppName = "appName";
 
-        public string fullUrl;
-        public string token;
-        public string appName;
-
-        public ApiTokenCredentials(string fullUrl, string token, string appName)
-        {
-            this.fullUrl = fullUrl;
-            this.token = token;
-            this.appName = appName;
-        }
-
-        public ApiTokenCredentials(string fullUrl, string token) : this(fullUrl, token, DefaultApiApplicationName) { }
-
-        public static ApiTokenCredentials? FromSaved()
+        public static ApiTokenCredentials FromSaved()
         {
             XmlDocument doc = new XmlDocument();
             doc.Load(FileName);
@@ -44,14 +30,14 @@ namespace FirstCSharp
             return fullUrlNode.InnerText;
         }
 
-        public void Save()
+        public static void Save(this ApiTokenCredentials apiTokenCredentials)
         {
             XmlDocument doc = new XmlDocument();
             doc.LoadXml($"<{KeyRootTag}></{KeyRootTag}>");
 
-            AppendNewElement(doc, KeyFullUrl, fullUrl);
-            AppendNewElement(doc, KeyToken, token);
-            AppendNewElement(doc, KeyAppName, appName);
+            AppendNewElement(doc, KeyFullUrl, apiTokenCredentials.fullUrl);
+            AppendNewElement(doc, KeyToken, apiTokenCredentials.token);
+            AppendNewElement(doc, KeyAppName, apiTokenCredentials.appName);
 
             XmlWriterSettings settings = new XmlWriterSettings();
             settings.Indent = true;

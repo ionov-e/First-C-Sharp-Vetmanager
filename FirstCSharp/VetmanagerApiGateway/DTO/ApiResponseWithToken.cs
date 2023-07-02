@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace FirstCSharp.DTO
+namespace FirstCSharp.VetmanagerApiGateway.DTO
 {
     public class ApiResponseWithToken
     {
@@ -23,6 +23,4 @@ namespace FirstCSharp.DTO
             public required string UserId { get; set; }
         }
     }
-
-
 }

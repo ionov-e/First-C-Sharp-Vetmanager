@@ -1,6 +1,7 @@
-﻿using FirstCSharp.DTO.RootDataWithModel;
-using FirstCSharp.DTO.RootDataWithModel.Model;
-using FirstCSharp.DTO.RootDataWithModel.Model.Enum;
+﻿using FirstCSharp.VetmanagerApiGateway;
+using FirstCSharp.VetmanagerApiGateway.DTO.ModelContainer;
+using FirstCSharp.VetmanagerApiGateway.DTO.ModelContainer.Model;
+using FirstCSharp.VetmanagerApiGateway.DTO.ModelContainer.Model.Enum;
 using System.Dynamic;
 using System.Globalization;
 
@@ -9,16 +10,16 @@ namespace FirstCSharp.WindowsForm
     internal partial class PetForm : Form
     {
         private readonly UserList _userList;
-        private readonly VetmanagerApiGateway _vetmanagerApiGateway;
+        private readonly ApiGateway _vetmanagerApiGateway;
         private readonly Pet? _petToEdit;
         private readonly PetType[] _petTypesWithBreeds;
         private readonly int _ownerId;
 
-        public PetForm(UserList userList, VetmanagerApiGateway vetmanagerApiGateway, int ownerId, PetType[] petTypes) : this(userList, vetmanagerApiGateway, ownerId, petTypes, null)
+        public PetForm(UserList userList, ApiGateway vetmanagerApiGateway, int ownerId, PetType[] petTypes) : this(userList, vetmanagerApiGateway, ownerId, petTypes, null)
         {
         }
 
-        public PetForm(UserList userList, VetmanagerApiGateway vetmanagerApiGateway, int ownerId, PetType[] petTypesWithBreeds, Pet? petToEdit)
+        public PetForm(UserList userList, ApiGateway vetmanagerApiGateway, int ownerId, PetType[] petTypesWithBreeds, Pet? petToEdit)
         {
             InitializeComponent();
             _userList = userList;
@@ -92,8 +93,8 @@ namespace FirstCSharp.WindowsForm
 
             try
             {
-                if (_petToEdit == null) { PetDataAfterPostOrPutRequest petRootData = await _vetmanagerApiGateway.CreateModel<PetDataAfterPostOrPutRequest>(new VetmanagerApiGateway.PathUri(VetmanagerApiGateway.Model.pet), petObjectToSend); }
-                else { PetData petRootData = await _vetmanagerApiGateway.UpdateModel<PetData>(new VetmanagerApiGateway.PathUri(VetmanagerApiGateway.Model.pet, _petToEdit.Id), petObjectToSend); }
+                if (_petToEdit == null) { PetDataAfterPostOrPutRequest petRootData = await _vetmanagerApiGateway.CreateModel<PetDataAfterPostOrPutRequest>(new PathUri(ApiGateway.Model.pet), petObjectToSend); }
+                else { PetData petRootData = await _vetmanagerApiGateway.UpdateModel<PetData>(new PathUri(ApiGateway.Model.pet, _petToEdit.Id), petObjectToSend); }
 
                 _userList.UpdatePetTable();
                 this.Close();
@@ -146,7 +147,6 @@ namespace FirstCSharp.WindowsForm
         {
             int? selectedPetTypeIdNullable = GetSelectedPetTypeIdNullable();
             return selectedPetTypeIdNullable ?? throw new Exception("Somehow Pet Type Id was null");
-
         }
 
         private int? GetSelectedPetTypeIdNullable()

@@ -1,8 +1,8 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace FirstCSharp.DTO.RootDataWithModel.Model
+namespace FirstCSharp.VetmanagerApiGateway.DTO.ModelContainer
 {
-    public abstract class AbstractModel
+    internal class IdOnly : ModelContainerInterface
     {
         public required string id { get; set; }
         [JsonIgnore]
@@ -11,5 +11,6 @@ namespace FirstCSharp.DTO.RootDataWithModel.Model
             get { return int.Parse(id); }
             set { id = value.ToString(); }
         }
+        public int TotalNumber { get => 1; set => throw new NotImplementedException(); }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace FirstCSharp.DTO.RootDataWithModel.Model
+namespace FirstCSharp.VetmanagerApiGateway.DTO.ModelContainer.Model
 {
     public class Street : AbstractModel
     {

@@ -1,7 +1,7 @@
-﻿using FirstCSharp.DTO.RootDataWithModel.Model;
+﻿using FirstCSharp.VetmanagerApiGateway.DTO.ModelContainer.Model;
 using System.Text.Json.Serialization;
 
-namespace FirstCSharp.DTO.RootDataWithModel
+namespace FirstCSharp.VetmanagerApiGateway.DTO.ModelContainer
 {
     internal class ClientData : AbstractContainerWithOneModelAndIntCount
     {

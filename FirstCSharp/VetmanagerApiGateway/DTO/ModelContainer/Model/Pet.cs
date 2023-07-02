@@ -1,4 +1,4 @@
-﻿namespace FirstCSharp.DTO.RootDataWithModel.Model
+﻿namespace FirstCSharp.VetmanagerApiGateway.DTO.ModelContainer.Model
 {
     public class Pet : AbstractModel
     {

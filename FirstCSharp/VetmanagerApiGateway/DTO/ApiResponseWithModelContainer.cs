@@ -1,9 +1,9 @@
-﻿using FirstCSharp.DTO.RootDataWithModel;
+﻿using FirstCSharp.VetmanagerApiGateway.DTO.ModelContainer;
 using System.Text.Json.Serialization;
 
-namespace FirstCSharp.DTO
+namespace FirstCSharp.VetmanagerApiGateway.DTO
 {
-    internal class ApiResponseWithModels<T> where T : ContainerInterface
+    internal class ApiResponseWithModelContainer<T> where T : ModelContainerInterface
     {
         [JsonPropertyName("success")]
         public required bool IsSuccess { get; set; }

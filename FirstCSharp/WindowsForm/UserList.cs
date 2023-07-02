@@ -1,15 +1,16 @@
-﻿using FirstCSharp.DTO.RootDataWithModel.Model;
-using static FirstCSharp.VetmanagerApiGateway;
+﻿using FirstCSharp.VetmanagerApiGateway;
+using FirstCSharp.VetmanagerApiGateway.DTO.ModelContainer.Model;
+using static FirstCSharp.VetmanagerApiGateway.ApiGateway;
 
 namespace FirstCSharp.WindowsForm
 {
     internal partial class UserList : Form
     {
-        private readonly VetmanagerApiGateway _vetmanagerApiGateway;
+        private readonly ApiGateway _vetmanagerApiGateway;
         private readonly Client[] _clients;
         private Pet[] _loadedPetsForSelectedClient;
 
-        public UserList(VetmanagerApiGateway vetmanagerApiGateway, Client[] clients)
+        public UserList(ApiGateway vetmanagerApiGateway, Client[] clients)
         {
             InitializeComponent();
             _vetmanagerApiGateway = vetmanagerApiGateway;

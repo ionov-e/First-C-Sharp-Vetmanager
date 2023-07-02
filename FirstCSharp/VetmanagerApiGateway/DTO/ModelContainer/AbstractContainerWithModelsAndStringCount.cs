@@ -1,9 +1,9 @@
-﻿using FirstCSharp.DTO.RootDataWithModel.Model;
+﻿using FirstCSharp.VetmanagerApiGateway.DTO.ModelContainer.Model;
 
-namespace FirstCSharp.DTO.RootDataWithModel
+namespace FirstCSharp.VetmanagerApiGateway.DTO.ModelContainer
 {
 
-    abstract public class AbstractContainerWithModelsAndStringCount : ContainerInterface
+    abstract public class AbstractContainerWithModelsAndStringCount : ModelContainerInterface
     {
         public required string totalCount { get; set; }
         public int TotalNumber

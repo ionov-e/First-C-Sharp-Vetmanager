@@ -1,4 +1,4 @@
-﻿namespace FirstCSharp.DTO.RootDataWithModel.Model.Enum
+﻿namespace FirstCSharp.VetmanagerApiGateway.DTO.ModelContainer.Model.Enum
 {
     internal enum PetGender
     {

@@ -1,5 +1,5 @@
-﻿using FirstCSharp.DTO.RootDataWithModel;
-using FirstCSharp.DTO.RootDataWithModel.Model;
+﻿using FirstCSharp.VetmanagerApiGateway.DTO.ModelContainer;
+using FirstCSharp.VetmanagerApiGateway.DTO.ModelContainer.Model;
 
 namespace FirstCSharp.WindowsForm
 {
