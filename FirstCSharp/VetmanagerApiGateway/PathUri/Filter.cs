@@ -43,7 +43,7 @@
                     valuesAsString += ',';
                 }
             }
-            return @"[{valuesAsString}]";
+            return $"[{valuesAsString}]";
         }
 
         private string GetOperatorAsString()
