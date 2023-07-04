@@ -3,24 +3,24 @@
     public class PathUri
     {
         private const string s_prefix = "/rest/api/";
-        private readonly AccessibleModel model;
+        private readonly AccessibleModelPathUri model;
         private readonly int? id;
         private readonly Filter[] filters;
 
-        public PathUri(AccessibleModel model)
+        public PathUri(AccessibleModelPathUri model)
         {
             this.model = model;
             filters = Array.Empty<Filter>();
         }
 
-        public PathUri(AccessibleModel model, int id)
+        public PathUri(AccessibleModelPathUri model, int id)
         {
             this.model = model;
             this.id = id;
             filters = Array.Empty<Filter>();
         }
 
-        public PathUri(AccessibleModel model, Filter[] filters)
+        public PathUri(AccessibleModelPathUri model, Filter[] filters)
         {
             this.model = model;
             this.filters = filters;

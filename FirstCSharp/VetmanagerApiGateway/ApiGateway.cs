@@ -1,6 +1,7 @@
 ﻿using FirstCSharp.VetmanagerApiGateway.DTO;
 using FirstCSharp.VetmanagerApiGateway.DTO.ModelContainer;
 using FirstCSharp.VetmanagerApiGateway.DTO.ModelContainer.Model;
+using FirstCSharp.VetmanagerApiGateway.ModelFacade;
 using FirstCSharp.VetmanagerApiGateway.PathUri;
 using System.Net.Http.Headers;
 using System.Text;
@@ -68,21 +69,23 @@ namespace FirstCSharp.VetmanagerApiGateway
             return new ApiTokenCredentials(fullUrl, apiResponse.Data.Token);
         }
 
-        public async Task<Client[]> GetAllClients() { return await GetModels<Client, ClientListData>(AccessibleModel.client); }
+        public async Task<Client[]> GetAllClients() { return await GetModels<Client, ClientListData>(AccessibleModelPathUri.client); }
 
-        public async Task<Breed[]> GetAllBreeds() { return await GetModels<Breed, BreedListData>(AccessibleModel.breed); }
+        public async Task<Breed[]> GetAllBreeds() { return await GetModels<Breed, BreedListData>(AccessibleModelPathUri.breed); }
 
-        public async Task<PetType[]> GetAllPetTypes() { return await GetModels<PetType, PetTypeListData>(AccessibleModel.petType); }
+        public async Task<PetType[]> GetAllPetTypes() { return await GetModels<PetType, PetTypeListData>(AccessibleModelPathUri.petType); }
 
-        public async Task<Client> GetClient(int id) { return await GetModel<Client, ClientData>(AccessibleModel.client, id); }
+        public async Task<Client> GetClient(int id) { return await GetModel<Client, ClientData>(AccessibleModelPathUri.client, id); }
+
+        public ClientFacade Client() { return new ClientFacade(this); }
 
         public async Task<Pet[]> GetPetByClientId(int id)
         {
-            var apiResponse = await GetModelsData<PetListData>(new PathUri.PathUri(AccessibleModel.pet, new[] { new Filter("owner_id", id.ToString()) }));
+            var apiResponse = await GetModelsData<PetListData>(new PathUri.PathUri(AccessibleModelPathUri.pet, new[] { new Filter("owner_id", id.ToString()) }));
             return apiResponse.GetModels();
         }
 
-        private async Task<TModel> GetModel<TModel, TContainerWithOneModel>(AccessibleModel model, int id)
+        private async Task<TModel> GetModel<TModel, TContainerWithOneModel>(AccessibleModelPathUri model, int id)
             where TModel : AbstractModel
             where TContainerWithOneModel : AbstractContainerWithOneModelAndIntCount
         {
@@ -90,7 +93,7 @@ namespace FirstCSharp.VetmanagerApiGateway
             return (TModel)apiResponse.GetModel();
         }
 
-        private async Task<TModel[]> GetModels<TModel, TContainerWithModels>(AccessibleModel model)
+        private async Task<TModel[]> GetModels<TModel, TContainerWithModels>(AccessibleModelPathUri model)
             where TModel : AbstractModel
             where TContainerWithModels : AbstractContainerWithModelsAndStringCount
         {
