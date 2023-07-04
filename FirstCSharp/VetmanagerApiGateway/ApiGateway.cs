@@ -14,13 +14,15 @@ namespace FirstCSharp.VetmanagerApiGateway
         private readonly HttpClient httpClient;
         public readonly string fullUrl;
 
-        /// <summary>
-        /// First way authorizing API requests
-        /// </summary>
-        /// <param name="httpClient">Default new HttpClient is expected</param>
-        /// <param name="fullUrl">Example: https://three.test.kube-dev.vetmanager.cloud</param>
-        /// <param name="apiKey">You can get it from clinic's Rest API settings from admin panel</param>
-        public ApiGateway(HttpClient httpClient, string fullUrl, string apiKey)
+        public ClientFacade Client { get { return new ClientFacade(this); } }
+
+    /// <summary>
+    /// First way authorizing API requests
+    /// </summary>
+    /// <param name="httpClient">Default new HttpClient is expected</param>
+    /// <param name="fullUrl">Example: https://three.test.kube-dev.vetmanager.cloud</param>
+    /// <param name="apiKey">You can get it from clinic's Rest API settings from admin panel</param>
+    public ApiGateway(HttpClient httpClient, string fullUrl, string apiKey)
         {
             this.fullUrl = fullUrl;
             this.httpClient = httpClient;
@@ -75,17 +77,13 @@ namespace FirstCSharp.VetmanagerApiGateway
 
         public async Task<PetType[]> GetAllPetTypes() { return await GetModels<PetType, PetTypeListData>(AccessibleModelPathUri.petType); }
 
-        public async Task<Client> GetClient(int id) { return await GetModel<Client, ClientData>(AccessibleModelPathUri.client, id); }
-
-        public ClientFacade Client() { return new ClientFacade(this); }
-
         public async Task<Pet[]> GetPetByClientId(int id)
         {
             var apiResponse = await GetModelsData<PetListData>(new PathUri.PathUri(AccessibleModelPathUri.pet, new[] { new Filter("owner_id", id.ToString()) }));
             return apiResponse.GetModels();
         }
 
-        private async Task<TModel> GetModel<TModel, TContainerWithOneModel>(AccessibleModelPathUri model, int id)
+        internal async Task<TModel> GetModel<TModel, TContainerWithOneModel>(AccessibleModelPathUri model, int id)
             where TModel : AbstractModel
             where TContainerWithOneModel : AbstractContainerWithOneModelAndIntCount
         {
