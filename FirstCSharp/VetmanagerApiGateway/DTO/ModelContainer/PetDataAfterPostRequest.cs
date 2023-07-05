@@ -3,7 +3,7 @@ using System.Text.Json.Serialization;
 
 namespace FirstCSharp.VetmanagerApiGateway.DTO.ModelContainer
 {
-    internal class PetDataAfterPostOrPutRequest : AbstractContainerWithOneModelAndIntCount
+    internal class PetDataAfterPostRequest : AbstractContainerWithOneModelAndIntCount
     {
         [JsonPropertyName("pet")]
         public required Pet[] Models { get; set; }

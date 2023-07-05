@@ -34,11 +34,11 @@
         private string ValuesToString(string[] values)
         {
             string valuesAsString = "";
-            foreach(string value in values)
+            foreach (string value in values)
             {
                 valuesAsString += $"'{value}'";
 
-            if (!value.Equals(values.Last()))
+                if (!value.Equals(values.Last()))
                 {
                     valuesAsString += ',';
                 }

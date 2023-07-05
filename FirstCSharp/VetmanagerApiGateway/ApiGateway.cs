@@ -1,6 +1,7 @@
 ﻿using FirstCSharp.VetmanagerApiGateway.DTO;
 using FirstCSharp.VetmanagerApiGateway.DTO.ModelContainer;
 using FirstCSharp.VetmanagerApiGateway.DTO.ModelContainer.Model;
+using FirstCSharp.VetmanagerApiGateway.ModelFacade;
 using FirstCSharp.VetmanagerApiGateway.PathUri;
 using System.Net.Http.Headers;
 using System.Text;
@@ -12,6 +13,24 @@ namespace FirstCSharp.VetmanagerApiGateway
     {
         private readonly HttpClient httpClient;
         public readonly string fullUrl;
+
+        public BreedFacade Breed => new BreedFacade(this);
+        public ClientFacade Client => new ClientFacade(this);
+        public PetFacade Pet => new PetFacade(this);
+        public PetTypeFacade PetType => new PetTypeFacade(this);
+
+        /// <summary>
+        /// Constructor without authentication headers. Shouldn't work with clean HttpClient without headers.
+        /// This constructor mostly for testing purposes.
+        /// </summary>
+        /// <param name="httpClient">Default new HttpClient is expected</param>
+        /// <param name="fullUrl">Example: https://three.test.kube-dev.vetmanager.cloud</param>
+        /// <param name="apiKey">You can get it from clinic's Rest API settings from admin panel</param>
+        public ApiGateway(HttpClient httpClient, string fullUrl)
+        {
+            this.fullUrl = fullUrl;
+            this.httpClient = httpClient;
+        }
 
         /// <summary>
         /// First way authorizing API requests
@@ -68,21 +87,7 @@ namespace FirstCSharp.VetmanagerApiGateway
             return new ApiTokenCredentials(fullUrl, apiResponse.Data.Token);
         }
 
-        public async Task<Client[]> GetAllClients() { return await GetModels<Client, ClientListData>(AccessibleModel.client); }
-
-        public async Task<Breed[]> GetAllBreeds() { return await GetModels<Breed, BreedListData>(AccessibleModel.breed); }
-
-        public async Task<PetType[]> GetAllPetTypes() { return await GetModels<PetType, PetTypeListData>(AccessibleModel.petType); }
-
-        public async Task<Client> GetClient(int id) { return await GetModel<Client, ClientData>(AccessibleModel.client, id); }
-
-        public async Task<Pet[]> GetPetByClientId(int id)
-        {
-            var apiResponse = await GetModelsData<PetListData>(new PathUri.PathUri(AccessibleModel.pet, new[] { new Filter("owner_id", id.ToString()) }));
-            return apiResponse.GetModels();
-        }
-
-        private async Task<TModel> GetModel<TModel, TContainerWithOneModel>(AccessibleModel model, int id)
+        internal async Task<TModel> GetModel<TModel, TContainerWithOneModel>(AccessibleModelPathUri model, int id)
             where TModel : AbstractModel
             where TContainerWithOneModel : AbstractContainerWithOneModelAndIntCount
         {
@@ -90,7 +95,7 @@ namespace FirstCSharp.VetmanagerApiGateway
             return (TModel)apiResponse.GetModel();
         }
 
-        private async Task<TModel[]> GetModels<TModel, TContainerWithModels>(AccessibleModel model)
+        internal async Task<TModel[]> GetModels<TModel, TContainerWithModels>(AccessibleModelPathUri model)
             where TModel : AbstractModel
             where TContainerWithModels : AbstractContainerWithModelsAndStringCount
         {
@@ -106,7 +111,7 @@ namespace FirstCSharp.VetmanagerApiGateway
             return arrayOfModelsExplicitlyConverted;
         }
 
-        private async Task<TModelContainer> GetModelsData<TModelContainer>(PathUri.PathUri pathUri) where TModelContainer : ModelContainerInterface
+        internal async Task<TModelContainer> GetModelsData<TModelContainer>(PathUri.PathUri pathUri) where TModelContainer : ModelContainerInterface
         {
             string apiResponseAsJson = await httpClient.GetStringAsync(pathUri.ToString());
             var apiResponse = JsonSerializer.Deserialize<ApiResponseWithModelContainer<TModelContainer>>(apiResponseAsJson) ?? throw new Exception("Wrong API response from Get Request");

@@ -94,8 +94,8 @@ namespace FirstCSharp.WindowsForm
 
             try
             {
-                if (_petToEdit == null) { PetDataAfterPostOrPutRequest petRootData = await _vetmanagerApiGateway.CreateModel<PetDataAfterPostOrPutRequest>(new PathUri(AccessibleModel.pet), petObjectToSend); }
-                else { PetData petRootData = await _vetmanagerApiGateway.UpdateModel<PetData>(new PathUri(AccessibleModel.pet, _petToEdit.Id), petObjectToSend); }
+                if (_petToEdit == null) { PetDataAfterPostRequest petRootData = await _vetmanagerApiGateway.CreateModel<PetDataAfterPostRequest>(new PathUri(AccessibleModelPathUri.pet), petObjectToSend); }
+                else { PetData petRootData = await _vetmanagerApiGateway.UpdateModel<PetData>(new PathUri(AccessibleModelPathUri.pet, _petToEdit.Id), petObjectToSend); }
 
                 _userList.UpdatePetTable();
                 this.Close();
