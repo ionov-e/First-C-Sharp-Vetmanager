@@ -14,15 +14,31 @@ namespace FirstCSharp.VetmanagerApiGateway
         private readonly HttpClient httpClient;
         public readonly string fullUrl;
 
-        public ClientFacade Client { get { return new ClientFacade(this); } }
+        public BreedFacade Breed => new BreedFacade(this);
+        public ClientFacade Client => new ClientFacade(this);
+        public PetFacade Pet => new PetFacade(this);
+        public PetTypeFacade PetType => new PetTypeFacade(this);
 
-    /// <summary>
-    /// First way authorizing API requests
-    /// </summary>
-    /// <param name="httpClient">Default new HttpClient is expected</param>
-    /// <param name="fullUrl">Example: https://three.test.kube-dev.vetmanager.cloud</param>
-    /// <param name="apiKey">You can get it from clinic's Rest API settings from admin panel</param>
-    public ApiGateway(HttpClient httpClient, string fullUrl, string apiKey)
+        /// <summary>
+        /// Constructor without authentication headers. Shouldn't work with clean HttpClient without headers.
+        /// This constructor mostly for testing purposes.
+        /// </summary>
+        /// <param name="httpClient">Default new HttpClient is expected</param>
+        /// <param name="fullUrl">Example: https://three.test.kube-dev.vetmanager.cloud</param>
+        /// <param name="apiKey">You can get it from clinic's Rest API settings from admin panel</param>
+        public ApiGateway(HttpClient httpClient, string fullUrl)
+        {
+            this.fullUrl = fullUrl;
+            this.httpClient = httpClient;
+        }
+
+        /// <summary>
+        /// First way authorizing API requests
+        /// </summary>
+        /// <param name="httpClient">Default new HttpClient is expected</param>
+        /// <param name="fullUrl">Example: https://three.test.kube-dev.vetmanager.cloud</param>
+        /// <param name="apiKey">You can get it from clinic's Rest API settings from admin panel</param>
+        public ApiGateway(HttpClient httpClient, string fullUrl, string apiKey)
         {
             this.fullUrl = fullUrl;
             this.httpClient = httpClient;
@@ -71,18 +87,6 @@ namespace FirstCSharp.VetmanagerApiGateway
             return new ApiTokenCredentials(fullUrl, apiResponse.Data.Token);
         }
 
-        public async Task<Client[]> GetAllClients() { return await GetModels<Client, ClientListData>(AccessibleModelPathUri.client); }
-
-        public async Task<Breed[]> GetAllBreeds() { return await GetModels<Breed, BreedListData>(AccessibleModelPathUri.breed); }
-
-        public async Task<PetType[]> GetAllPetTypes() { return await GetModels<PetType, PetTypeListData>(AccessibleModelPathUri.petType); }
-
-        public async Task<Pet[]> GetPetByClientId(int id)
-        {
-            var apiResponse = await GetModelsData<PetListData>(new PathUri.PathUri(AccessibleModelPathUri.pet, new[] { new Filter("owner_id", id.ToString()) }));
-            return apiResponse.GetModels();
-        }
-
         internal async Task<TModel> GetModel<TModel, TContainerWithOneModel>(AccessibleModelPathUri model, int id)
             where TModel : AbstractModel
             where TContainerWithOneModel : AbstractContainerWithOneModelAndIntCount
@@ -91,7 +95,7 @@ namespace FirstCSharp.VetmanagerApiGateway
             return (TModel)apiResponse.GetModel();
         }
 
-        private async Task<TModel[]> GetModels<TModel, TContainerWithModels>(AccessibleModelPathUri model)
+        internal async Task<TModel[]> GetModels<TModel, TContainerWithModels>(AccessibleModelPathUri model)
             where TModel : AbstractModel
             where TContainerWithModels : AbstractContainerWithModelsAndStringCount
         {
@@ -107,7 +111,7 @@ namespace FirstCSharp.VetmanagerApiGateway
             return arrayOfModelsExplicitlyConverted;
         }
 
-        private async Task<TModelContainer> GetModelsData<TModelContainer>(PathUri.PathUri pathUri) where TModelContainer : ModelContainerInterface
+        internal async Task<TModelContainer> GetModelsData<TModelContainer>(PathUri.PathUri pathUri) where TModelContainer : ModelContainerInterface
         {
             string apiResponseAsJson = await httpClient.GetStringAsync(pathUri.ToString());
             var apiResponse = JsonSerializer.Deserialize<ApiResponseWithModelContainer<TModelContainer>>(apiResponseAsJson) ?? throw new Exception("Wrong API response from Get Request");

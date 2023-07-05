@@ -1,6 +1,4 @@
-﻿using FirstCSharp.VetmanagerApiGateway.PathUri;
-
-namespace FirstCSharp.VetmanagerApiGateway.ModelFacade
+﻿namespace FirstCSharp.VetmanagerApiGateway.ModelFacade
 {
     abstract public class AbstactModelFacade
     {

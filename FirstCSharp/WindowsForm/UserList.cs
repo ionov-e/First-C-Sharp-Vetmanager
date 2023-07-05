@@ -26,7 +26,7 @@ namespace FirstCSharp.WindowsForm
 
         public async void UpdatePetTable()
         {
-            _loadedPetsForSelectedClient = await _vetmanagerApiGateway.GetPetByClientId(GetSelectedClientIdOrThrow());
+            _loadedPetsForSelectedClient = await _vetmanagerApiGateway.Pet.ByClientId(GetSelectedClientIdOrThrow());
             petDataGridView.DataSource = _loadedPetsForSelectedClient;
         }
 
@@ -45,7 +45,7 @@ namespace FirstCSharp.WindowsForm
                 return;
             }
 
-            PetType[] petTypes = await _vetmanagerApiGateway.GetAllPetTypes();
+            PetType[] petTypes = await _vetmanagerApiGateway.PetType.All();
             PetForm form = new(this, _vetmanagerApiGateway, GetSelectedClientIdOrThrow(), petTypes);
             form.Show();
         }
@@ -54,7 +54,7 @@ namespace FirstCSharp.WindowsForm
         private async void editButton_Click(object sender, EventArgs e)
         {
             int selectedPetId = GetPetIdOrThrow();
-            PetType[] petTypes = await _vetmanagerApiGateway.GetAllPetTypes();
+            PetType[] petTypes = await _vetmanagerApiGateway.PetType.All();
             Pet pet = GetPetFromListById(selectedPetId);
             PetForm form = new(this, _vetmanagerApiGateway, GetSelectedClientIdOrThrow(), petTypes, pet);
             form.Show();

@@ -1,6 +1,6 @@
 ﻿using FirstCSharp.VetmanagerApiGateway.PathUri;
 
-namespace FirstCSharp.VetmanagerApiGateway.ModelFacade
+namespace FirstCSharp.VetmanagerApiGateway.ModelFacade.Interface
 {
     internal interface ModelFacadeInterface
     {

@@ -27,7 +27,7 @@ namespace FirstCSharp.WindowsForm
         {
             try
             {
-                Client[] response = await vetmanagerApiGateway.GetAllClients();
+                Client[] response = await vetmanagerApiGateway.Client.All();
                 UserList form = new(vetmanagerApiGateway, response);
                 form.Show();
             }
