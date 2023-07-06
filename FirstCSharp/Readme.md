@@ -6,8 +6,10 @@ Vetmanager - a CRM service for veterinary clinics.
 
 This project uses its REST API feature to provide CRUD functionality for Pets.
 
-All REST API funtionality with DTOs was moved to a separete REST API package which was added to this project as dependency:
-https://www.nuget.org/packages/VetmanagerApiGateway/
+All REST API funtionality with DTOs was moved to a separete REST API package which was added to this project as dependency: 
+[GitHub Link](https://github.com/ionov-e/Vetmanager-API-Gateway-C-) or 
+[Nuget Link](https://www.nuget.org/packages/VetmanagerApiGateway/)
+
 
 ![Usage 1](docs/usage-1.gif)
 
