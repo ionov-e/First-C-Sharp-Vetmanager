@@ -1,6 +1,6 @@
-﻿using FirstCSharp.VetmanagerApiGateway;
+﻿using VetmanagerApiGateway;
 
-namespace FirstCSharp.WindowsForm
+namespace VetmanagerFormControl.WindowsForm
 {
     internal partial class LoginByUserAndPasswordForm : Form
     {

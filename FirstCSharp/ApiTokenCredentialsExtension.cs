@@ -1,8 +1,8 @@
-﻿using FirstCSharp.VetmanagerApiGateway;
-using System.Text;
+﻿using System.Text;
 using System.Xml;
+using VetmanagerApiGateway;
 
-namespace FirstCSharp
+namespace VetmanagerFormControl
 {
     public static class ApiTokenCredentialsExtension
     {

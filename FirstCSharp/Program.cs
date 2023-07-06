@@ -1,6 +1,6 @@
-using FirstCSharp.WindowsForm;
+using VetmanagerFormControl.WindowsForm;
 
-namespace FirstCSharp
+namespace VetmanagerFormControl
 {
     internal static class Program
     {

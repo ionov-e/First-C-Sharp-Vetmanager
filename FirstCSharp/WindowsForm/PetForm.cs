@@ -1,12 +1,12 @@
-﻿using FirstCSharp.VetmanagerApiGateway;
-using FirstCSharp.VetmanagerApiGateway.DTO.ModelContainer;
-using FirstCSharp.VetmanagerApiGateway.DTO.ModelContainer.Model;
-using FirstCSharp.VetmanagerApiGateway.DTO.ModelContainer.Model.Enum;
-using FirstCSharp.VetmanagerApiGateway.PathUri;
-using System.Dynamic;
+﻿using System.Dynamic;
 using System.Globalization;
+using VetmanagerApiGateway;
+using VetmanagerApiGateway.DTO.ModelContainer;
+using VetmanagerApiGateway.DTO.ModelContainer.Model;
+using VetmanagerApiGateway.DTO.ModelContainer.Model.Enum;
+using VetmanagerApiGateway.PathUri;
 
-namespace FirstCSharp.WindowsForm
+namespace VetmanagerFormControl.WindowsForm
 {
     internal partial class PetForm : Form
     {

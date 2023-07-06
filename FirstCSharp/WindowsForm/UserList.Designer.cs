@@ -1,7 +1,7 @@
-﻿using FirstCSharp.VetmanagerApiGateway.DTO.ModelContainer;
-using FirstCSharp.VetmanagerApiGateway.DTO.ModelContainer.Model;
+﻿using VetmanagerApiGateway.DTO.ModelContainer;
+using VetmanagerApiGateway.DTO.ModelContainer.Model;
 
-namespace FirstCSharp.WindowsForm
+namespace VetmanagerFormControl.WindowsForm
 {
     partial class UserList
     {

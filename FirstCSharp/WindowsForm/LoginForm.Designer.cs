@@ -1,4 +1,4 @@
-﻿namespace FirstCSharp.WindowsForm
+﻿namespace VetmanagerFormControl.WindowsForm
 {
     partial class LoginForm
     {

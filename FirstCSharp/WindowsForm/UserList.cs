@@ -1,8 +1,8 @@
-﻿using FirstCSharp.VetmanagerApiGateway;
-using FirstCSharp.VetmanagerApiGateway.DTO.ModelContainer.Model;
-using FirstCSharp.VetmanagerApiGateway.PathUri;
+﻿using VetmanagerApiGateway;
+using VetmanagerApiGateway.DTO.ModelContainer.Model;
+using VetmanagerApiGateway.PathUri;
 
-namespace FirstCSharp.WindowsForm
+namespace VetmanagerFormControl.WindowsForm
 {
     internal partial class UserList : Form
     {

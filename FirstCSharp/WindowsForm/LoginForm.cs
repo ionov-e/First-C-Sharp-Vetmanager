@@ -1,7 +1,7 @@
-using FirstCSharp.VetmanagerApiGateway;
-using FirstCSharp.VetmanagerApiGateway.DTO.ModelContainer.Model;
+using VetmanagerApiGateway;
+using VetmanagerApiGateway.DTO.ModelContainer.Model;
 
-namespace FirstCSharp.WindowsForm
+namespace VetmanagerFormControl.WindowsForm
 {
     internal partial class LoginForm : Form
     {
