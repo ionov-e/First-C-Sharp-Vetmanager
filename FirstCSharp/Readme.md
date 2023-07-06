@@ -9,6 +9,8 @@ This project uses its REST API feature to provide CRUD functionality for Pets.
 All REST API funtionality with DTOs was moved to a separete REST API package which was added to this project as dependency:
 https://www.nuget.org/packages/VetmanagerApiGateway/
 
+![Usage 1](docs/usage-1.gif)
+
 ## Features
 
 - **Autosaving and autoloading last successful credentials**:
